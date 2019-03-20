@@ -53,5 +53,8 @@ module.exports = {
       template: 'index.html',
       inject: true
     })
-  ]
+  ],
+  node: {
+    fs: 'empty'
+  }
 }

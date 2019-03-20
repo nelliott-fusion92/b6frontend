@@ -1,4 +1,5 @@
 <script>
+
   import axios from 'axios'
 
   export default {
@@ -32,9 +33,11 @@
       }
     }
   }
+
 </script>
 
 <template>
+
   <div v-if="info.data">
     <div>1 {{ info.data.chartName}} =</div>
     <div v-for="(bpi, key) in info.data.bpi">
@@ -42,6 +45,7 @@
     </div>
     <div class="lastupdated">Last updated {{ lastUpdated }}</div>
   </div>
+
 </template>
 
 <style lang="scss" scoped>
@@ -51,4 +55,5 @@
   .lastupdated {
     color: $col;
   }
+
 </style>
