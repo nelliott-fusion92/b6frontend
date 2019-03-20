@@ -1,4 +1,5 @@
 <script>
+
   import axios from 'axios'
 
   export default {
@@ -7,18 +8,19 @@
       'urlRoot'
     ]
   }
+
 </script>
 
 <template>
+
   <router-link :to="{ name: this.urlRoot, params: { id: this.banner._id } }">
     <div class="banner">
-      <div v-if="banner">
-        <div class="name">{{ banner.name }}</div>
-        <div class="dimensions">{{ banner.width }} x {{ banner.height }}</div>
-        <div class="description">{{ banner.description }}</div>
-      </div>
+      <div class="name">{{ banner.name }}</div>
+      <div class="dimensions">{{ banner.width }} x {{ banner.height }}</div>
+      <div class="description">{{ banner.description }}</div>
     </div>
   </router-link>
+
 </template>
 
 <style lang="scss" scoped>

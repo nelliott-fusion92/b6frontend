@@ -1,4 +1,5 @@
 <script>
+
   import axios from 'axios'
   import bannerlistitem from './bannerlistitem.vue'
 
@@ -22,14 +23,15 @@
         })
     }
   }
+
 </script>
 
 <template>
+
   <div>
-    <div v-if="banners">
-      <bannerlistitem v-for="banner in banners" v-bind:banner="banner" urlRoot="preset" :key="banner._id" />
-    </div>
+    <bannerlistitem v-for="banner in banners" v-bind:banner="banner" urlRoot="preset" :key="banner._id" />
   </div>
+
 </template>
 
 <style lang="scss" scoped>

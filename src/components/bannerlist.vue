@@ -1,10 +1,11 @@
 <script>
+
   import axios from 'axios'
   import bannerlistitem from './bannerlistitem.vue'
 
   export default {
     props: [
-      'api_base'
+      'api_base',
     ],
     data: function(){
       return {
@@ -22,14 +23,15 @@
         })
     }
   }
+
 </script>
 
 <template>
+
   <div>
-    <div v-if="banners">
-      <bannerlistitem v-for="banner in banners" v-bind:banner="banner" urlRoot="banner" :key="banner._id" />
-    </div>
+    <bannerlistitem v-for="banner in banners" v-bind:banner="banner" urlRoot="banner" :key="banner._id" />
   </div>
+
 </template>
 
 <style lang="scss" scoped>

@@ -1,4 +1,5 @@
 <script>
+
   import axios from 'axios'
 
   export default {
@@ -12,7 +13,7 @@
       }
     },
     components: {
-      
+
     },
     mounted () {
       axios
@@ -22,14 +23,17 @@
         })
     }
   }
+
 </script>
 
 <template>
+
   <div>
     <div v-if="components" v-for="component in components">
       {{component.name}}
     </div>
   </div>
+  
 </template>
 
 <style lang="scss" scoped>

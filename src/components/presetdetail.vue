@@ -1,4 +1,5 @@
 <script>
+
   import axios from 'axios'
   import bannerdetailitem from './bannerdetailitem.vue'
 
@@ -23,12 +24,15 @@
         })
     }
   }
+
 </script>
 
 <template>
+
   <div>
     <bannerdetailitem v-if="banner" v-bind:banner="banner" />
   </div>
+
 </template>
 
 <style lang="scss" scoped>

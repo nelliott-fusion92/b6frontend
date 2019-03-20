@@ -15,6 +15,10 @@ Vue.use(VueRouter)
 const api_base = 'http://localhost:2047/api/'
 
 export default new VueRouter({
+  beforeRouteEnter: (to, from, next) => {
+    console.log(to)
+    next()
+  },
   routes: [
     {
       path: '/bitcoin',
@@ -34,8 +38,8 @@ export default new VueRouter({
       name: 'banner',
       component: Bannerdetail,
       props: (route) => ({
+        api_base: api_base,
         id: route.params.id,
-        api_base: api_base
       })
     },
     {
@@ -51,8 +55,8 @@ export default new VueRouter({
       name: 'preset',
       component: Presetdetail,
       props: (route) => ({
+        api_base: api_base,
         id: route.params.id,
-        api_base: api_base
       })
     },
     {

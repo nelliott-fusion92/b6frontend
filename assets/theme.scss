@@ -1,2 +1,27 @@
 $col: #F0F;
 $errorCol: #F00;
+
+body {
+  font-family: Verdana;
+  font-size: 12px;
+}
+
+h1 {
+  font-size: 32px;
+}
+
+h2 {
+  font-size: 24px;
+}
+
+a {
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+a:visited {
+  color: #00F;
+}

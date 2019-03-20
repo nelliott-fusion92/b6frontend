@@ -1,11 +1,12 @@
 <script>
+
   import axios from 'axios'
   import bannerdetailitem from './bannerdetailitem.vue'
 
   export default {
     props: [
       'id',
-      'api_base'
+      'api_base',
     ],
     data: function(){
       return {
@@ -23,12 +24,15 @@
         })
     }
   }
+
 </script>
 
 <template>
+
   <div>
     <bannerdetailitem v-if="banner" v-bind:banner="banner" />
   </div>
+
 </template>
 
 <style lang="scss" scoped>

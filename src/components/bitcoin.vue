@@ -5,7 +5,7 @@
   export default {
     data: function(){
       return {
-        info: ''
+        BTCinfo: ''
       }
     },
     mounted () {
@@ -17,7 +17,7 @@
     },
     computed: {
       lastUpdated: function() {
-        return this.info.data.time.updated
+        return this.BTCinfo.data.time.updated
       }
     },
     filters: {
@@ -29,7 +29,7 @@
       getData: function() {
         axios
           .get('https://api.coindesk.com/v1/bpi/currentprice.json')
-          .then(response => (this.info = response))
+          .then(response => (this.BTCinfo = response))
       }
     }
   }
@@ -38,9 +38,9 @@
 
 <template>
 
-  <div v-if="info.data">
-    <div>1 {{ info.data.chartName}} =</div>
-    <div v-for="(bpi, key) in info.data.bpi">
+  <div v-if="BTCinfo.data">
+    <div>1 {{ BTCinfo.data.chartName}} =</div>
+    <div v-for="(bpi, key) in BTCinfo.data.bpi">
       <span v-html="bpi.symbol"></span>{{ bpi.rate_float | formatCurrency }}
     </div>
     <div class="lastupdated">Last updated {{ lastUpdated }}</div>
