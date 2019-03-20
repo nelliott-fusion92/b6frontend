@@ -14,23 +14,19 @@ Vue.use(VueRouter)
 
 const api_base = 'http://localhost:2047/api/'
 
-export default new VueRouter({
-  beforeRouteEnter: (to, from, next) => {
-    console.log(to)
-    next()
-  },
+const r = new VueRouter({
   routes: [
     {
       path: '/bitcoin',
       name: 'bitcoin',
-      component: Bitcoin
+      component: Bitcoin,
     },
     {
       path: '/banners',
       name: 'banners',
       component: Bannerlist,
       props: {
-        api_base: api_base
+        api_base,
       }
     },
     {
@@ -38,7 +34,7 @@ export default new VueRouter({
       name: 'banner',
       component: Bannerdetail,
       props: (route) => ({
-        api_base: api_base,
+        api_base,
         id: route.params.id,
       })
     },
@@ -47,7 +43,7 @@ export default new VueRouter({
       name: 'presets',
       component: Presetlist,
       props: {
-        api_base: api_base
+        api_base,
       }
     },
     {
@@ -55,7 +51,7 @@ export default new VueRouter({
       name: 'preset',
       component: Presetdetail,
       props: (route) => ({
-        api_base: api_base,
+        api_base,
         id: route.params.id,
       })
     },
@@ -64,13 +60,20 @@ export default new VueRouter({
       name: 'components',
       component: Componentlist,
       props: {
-        api_base: api_base
+        api_base,
       }
     },
     {
       path: '*',
       name: 'error',
-      component: Errorpage
+      component: Errorpage,
     },
-  ]
+  ],
 })
+
+r.beforeEach((to, from, next) => {
+  // auth check here
+  next()
+})
+
+export default r
