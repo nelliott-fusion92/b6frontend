@@ -26,9 +26,17 @@
 <style lang="scss" scoped>
 
   @import '../../assets/theme.scss';
-
   .banner {
-    margin: 0 0 10px 0;
+    cursor: pointer;
+    user-select: none;
+    position:relative;
+    display: inline-block;
+    margin: 0 10px 15px 0;
+    width: 200px;
+    height: 140px;
+    padding: 10px;
+    border: solid 1px #055;
+    vertical-align: top;
   }
 
   .name {
