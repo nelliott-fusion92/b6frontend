@@ -42,7 +42,7 @@ module.exports = {
           loader: 'file-loader',
           options: {
             name: '[name].[ext]',
-            outputPath: 'fonts/'
+            outputPath: path.join(__dirname, '../dist/fonts'),
           }
         }]
       }

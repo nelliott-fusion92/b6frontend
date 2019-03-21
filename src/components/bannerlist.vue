@@ -10,6 +10,8 @@
     data: function(){
       return {
         banners: null,
+        listOpen: false,
+        selectedName: 'Select an option'
       }
     },
     components: {
@@ -23,8 +25,10 @@
         })
     },
     methods: {
-      listClicked: function(e, x) {
-        console.log(e)
+      listingClicked(_name) {
+        console.log(_name)
+        this.listOpen = !this.listOpen
+        this.selectedName = _name
       }
     }
   }
@@ -33,21 +37,41 @@
 
 <template>
 
-  <div>
-    <bannerlistitem v-for="banner in banners" v-bind:banner="banner" urlRoot="banner" :key="banner._id" />
-    <div id="listbox-id-1" class="slds-dropdown slds-dropdown_length-5 slds-dropdown_fluid" role="listbox">
-      <ul class="slds-listbox slds-listbox_vertical" role="presentation">
-        <li v-for="banner in banners" v-bind:banner="banner" :key="banner._id" role="presentation" class="slds-listbox__item">
-          <div id="option1" class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small" role="option">
-            <span class="slds-media__figure slds-listbox__option-icon"></span>
-            <span class="slds-media__body">
-              <span @click="listClicked(banner.name)"class="slds-truncate" :title="banner.name"> {{ banner.name }}</span>
+
+  <div class="slds-form-element">
+    <label class="slds-form-element__label" for="combobox-unique-id-6">Search</label>
+    <div class="slds-form-element__control">
+      <div class="slds-combobox_container slds-size_small">
+        <div v-bind:class="{ 'slds-is-open': listOpen }" class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click" aria-expanded="false" aria-haspopup="listbox" role="combobox">
+          <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right" role="none">
+            <input @click="listOpen = !listOpen" class="slds-input slds-combobox__input" id="combobox-unique-id-6" aria-activedescendant="listbox-option-unique-id-01" aria-controls="listbox-unique-id" autocomplete="off" role="textbox" type="text" placeholder="Select an Option" readonly=""
+              v-bind:value="this.selectedName" />
+            <span class="slds-icon_container slds-icon-utility-down slds-input__icon slds-input__icon_right" title="Description of icon when needed">
+              <svg class="slds-icon slds-icon slds-icon_x-small slds-icon-text-default" aria-hidden="true">
+                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#down" />
+              </svg>
+              <span class="slds-assistive-text">Description of icon when needed</span>
             </span>
           </div>
-        </li>
-      </ul>
+          <div id="listbox-unique-id" role="listbox">
+            <ul class="slds-listbox slds-listbox_vertical slds-dropdown slds-dropdown_fluid" role="presentation">
+              <li v-for="banner in banners" v-bind:banner="banner" :key="banner._id" role="presentation" class="slds-listbox__item">
+                <div @click="listingClicked(banner.name)" class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small" role="option">
+                  <span class="slds-media__figure slds-listbox__option-icon"></span>
+                  <span class="slds-media__body">
+                    <span class="slds-truncate" :title="banner.name"> {{ banner.name }}</span>
+                  </span>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
+
+
+
 
 </template>
 
