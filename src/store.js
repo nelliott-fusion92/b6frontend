@@ -1,22 +1,21 @@
 import axios from 'axios'
 import Vue from 'vue'
+import Vuex from 'vuex'
 import _ from 'lodash-es'
 
-export const store = Vue.observable({
-  api_base: 'http://localhost:2047/api/',
-  debug: true,
-  banners: [],
-  presets: [],
-  currentPreset: {},
-  currentBanner: {}
-})
-
-let history = []
-let historyIndex = 0
-
-function pushState() {
-  history.unshift(_.clone(store))
-  log('history', history)
+Object.byString = function(o, s) {
+    s = s.replace(/\[(\w+)\]/g, '.$1'); // convert indexes to properties
+    s = s.replace(/^\./, '');           // strip a leading dot
+    var a = s.split('.');
+    for (var i = 0, n = a.length; i < n; ++i) {
+        var k = a[i];
+        if (k in o) {
+            o = o[k];
+        } else {
+            return;
+        }
+    }
+    return o;
 }
 
 function log(str, obj) {
@@ -26,115 +25,139 @@ function log(str, obj) {
   else {
     console.log(str, obj)
   }
-
 }
 
-export const mutations = {
+const loadStatuses = [
+  'LOADING',
+  'COMPLETE'
+]
 
-  getBanners: function() {
-    axios
-      .get(`${store.api_base}v1/banners`)
-      .then((response) => {
-        pushState()
-        store.banners = response.data
-      })
-  },
-  getBanner: function(id) {
+Vue.use(Vuex)
 
-    axios
-      .get(`${store.api_base}v1/banners/${id}`)
-      .then((response) => {
-        pushState()
-        store.currentBanner = response.data
-        this.isLoaded = true;
-      })
-
-  },
-  getPresets: function() {
-    axios
-      .get(`${store.api_base}v1/presets`)
-      .then((response) => {
-        pushState()
-        store.presets = response.data
-      })
-  },
-  getPreset: function(id) {
-    axios
-      .get(`${store.api_base}v1/presets/${id}`)
-      .then((response) => {
-        pushState()
-        store.currentPreset = response.data
-        this.isLoaded = true;
-      })
-  },
-  setBannerProp: function(path, val) {
-    _.set(store.currentBanner, path, val)
-  },
-}
-/*
-const createStore = ({ state }) =>
-  new Vue({
-    data () {
-      return { state }
-    },
-    methods: {
-      log: function(str) {
-        if(store.debug) {
-          console.log(str)
-        }
-      },
-      pushState: function() {
-        store.history.unshift(_.clone(store))
-        this.log(store.history)
-      },
-      update: function(key, data) {
-        this.pushState()
-        store[key] = data
-      },
-      getBanners: function() {
-        axios
-          .get(`${store.api_base}v1/banners`)
-          .then((response) => {
-            this.update('banners', response.data)
-          })
-      },
-      getBanner: function(id) {
-        axios
-          .get(`${store.api_base}v1/banners/${id}`)
-          .then((response) => {
-            this.update('currentBanner', response.data)
-          })
-      },
-      getPresets: function() {
-        axios
-          .get(`${store.api_base}v1/presets`)
-          .then((response) => {
-            this.update('presets', response.data)
-          })
-      },
-      getPreset: function(id) {
-        axios
-          .get(`${store.api_base}v1/presets/${id}`)
-          .then((response) => {
-            this.update('currentPreset', response.data)
-          })
-      },
-      setBannerProp: function(path, val) {
-        _.set(this.currentBanner, path, val)
-      },
-    },
-  })
-
-export default createStore({
+const store = new Vuex.Store({
   state: {
     api_base: 'http://localhost:2047/api/',
     debug: true,
-    history: [],
-    historyIndex: 0,
     banners: [],
     presets: [],
+    components: [],
     currentPreset: {},
-    currentBanner: {}
+    currentBanner: {},
+    loadStatus: 'LOADING',
+  },
+  actions: {
+
+    GET_BANNERS: async function({ commit }) {
+      commit('changeLoadingStatus', 'LOADING')
+      const data = await axios.get(`${this.state.api_base}v1/banners`)
+      commit('setBanners', data.data)
+      commit('changeLoadingStatus', 'COMPLETE')
+    },
+
+    GET_BANNER: async function({ commit }, payload) {
+      commit('changeLoadingStatus', 'LOADING')
+      const data = await axios.get(`${this.state.api_base}v1/banners/${payload}`)
+      commit('setCurrentBanner', data.data)
+      commit('changeLoadingStatus', 'COMPLETE')
+    },
+
+    GET_PRESETS: async function({ commit }) {
+      commit('changeLoadingStatus', 'LOADING')
+      const data = await axios.get(`${this.state.api_base}v1/presets`)
+      commit('setPresets', data.data)
+      commit('changeLoadingStatus', 'COMPLETE')
+    },
+
+    GET_PRESET: async function({ commit }, payload) {
+      commit('changeLoadingStatus', 'LOADING')
+      const data = await axios.get(`${this.state.api_base}v1/presets/${payload}`)
+      commit('setCurrentPreset', data.data)
+      commit('changeLoadingStatus', 'COMPLETE')
+    },
+
+    GET_COMPONENTS: async function({ commit }) {
+      const data = await axios.get(`${this.state.api_base}v1/components`)
+      commit('setComponents', data.data)
+    },
+
+    SET_BANNER_PROPERTY: function({ commit }, payload) {
+      console.log(payload)
+      commit('setBannerProperty', payload)
+
+    },
+
+  },
+
+  getters: {
+    getBannerProperty: (state) => (path) => {
+      //console.log(eval('state.currentBanner.' + prop))
+      const v = _.get(state.currentBanner, path)
+      return v
+    },
+    getBannerPropertyType: (state) => (path) => {
+      const type = null
+      if(path.indexOf('.') == -1){
+        const type = _.get(state, `components.Banner.editableParameters.${ path }`).type
+      }
+      return type
+    }
+  },
+
+  mutations: {
+
+    undo: function(currentState, data){
+
+    },
+
+    redo: function(currentState, data){
+
+    },
+
+    changeLoadingStatus: function(currentState, data) {
+      currentState.loadStatus = data;
+    },
+
+    setCurrentBanner: function(currentState, data) {
+      pushState()
+      currentState.currentBanner = data
+    },
+
+    setBanners: function(currentState, data) {
+      pushState()
+      currentState.banners = data
+    },
+
+    setCurrentPreset: function(currentState, data) {
+      pushState()
+      currentState.currentPreset = data
+    },
+
+    setPresets: function(currentState, data) {
+      pushState()
+      currentState.presets = data
+    },
+
+    setComponents: function(currentState, data) {
+      currentState.components = data
+    },
+
+    setBannerProperty: function(currentState, payload) {
+        if(this.getters.getBannerPropertyType(payload.path)) {
+          pushState()
+        _.set(currentState.currentBanner, payload.path, payload.val)
+        _.get(currentState.currentBanner, payload.path)
+        //_.set(currentState.currentBanner, payload.path, payload.val)
+      }
+    },
   },
 })
-*/
+
+let history = []
+let historyIndex = 0
+
+function pushState() {
+  history.unshift(_.clone(store.state))
+  log('history', history)
+}
+
+export default store

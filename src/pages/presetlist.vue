@@ -1,9 +1,8 @@
 <script>
 
   import axios from 'axios'
-  import bannerlistitem from './bannerlistitem.vue'
+  import bannerlistitem from '../components/bannerlistitem.vue'
   import down from '../../node_modules/@salesforce-ux/design-system/assets/icons/utility/down.svg'
-  import { store, mutations } from '../store'
 
   //var req = require.context('../../node_modules/@salesforce-ux/design-system/assets/icons/utility/', true, /\.svg$/);
   //req.keys().forEach(req);
@@ -15,7 +14,6 @@
     ],
     data: function(){
       return {
-        store,
         listOpen: false,
         selectedName: 'Select an option',
       }
@@ -25,19 +23,22 @@
       down
     },
     mounted () {
-      this.getBanners()
+      this.$store.dispatch('GET_PRESETS')
     },
     methods: {
-      getBanners: mutations.getBanners,
       bannerClicked(_banner) {
-        console.log(_banner.name)
         this.listOpen = !this.listOpen
         this.selectedName = _banner.name
       },
     },
+    computed: {
+      presets: function() {
+        return this.$store.state.presets
+      },
+    },
     filters: {
       bannerURL: function(id) {
-        return `/banners/${id}`
+        return `/presets/${id}`
       }
     }
   }
@@ -61,7 +62,7 @@
           </div>
           <div id="listbox-unique-id" role="listbox">
             <ul class="slds-listbox slds-listbox_vertical slds-dropdown slds-dropdown_fluid" role="presentation">
-              <li v-for="banner in store.banners" v-bind:banner="banner" :key="banner._id" role="presentation" class="slds-listbox__item">
+              <li v-for="banner in presets" v-bind:banner="banner" :key="banner._id" role="presentation" class="slds-listbox__item">
                 <router-link :to="banner._id | bannerURL">
                   <div @click="bannerClicked(banner)" class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small" role="option">
                     <span class="slds-media__figure slds-listbox__option-icon"></span>

@@ -2,13 +2,14 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import dotenv from 'dotenv/config'
 
-import Bitcoin from '../components/bitcoin.vue'
-import Bannerlist from '../components/bannerlist.vue'
-import Bannerdetail from '../components/bannerdetail.vue'
-import Presetlist from '../components/presetlist.vue'
-import Presetdetail from '../components/presetdetail.vue'
-import Componentlist from '../components/components.vue'
-import Errorpage from '../components/errorpage.vue'
+import Bitcoin from '../pages/bitcoin.vue'
+import Bannerlist from '../pages/bannerlist.vue'
+import Bannerdetail from '../pages/bannerdetail.vue'
+import Presetlist from '../pages/presetlist.vue'
+import Presetdetail from '../pages/presetdetail.vue'
+import Componentlist from '../pages/components.vue'
+import Documentation from '../pages/documentation.vue'
+import Errorpage from '../pages/errorpage.vue'
 
 Vue.use(VueRouter)
 
@@ -51,6 +52,11 @@ const r = new VueRouter({
       path: '/components',
       name: 'components',
       component: Componentlist,
+    },
+    {
+      path: '/documentation',
+      name: 'documentation',
+      component: Documentation,
     },
     {
       path: '*',

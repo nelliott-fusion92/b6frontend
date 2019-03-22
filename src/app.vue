@@ -1,17 +1,11 @@
 <script>
 
   import pageheader from './components/pageheader.vue'
-  import { store, mutations } from './store'
 
   export default {
     name: 'app',
     components: {
       pageheader
-    },
-    data: () => {
-      return {
-        store
-      }
     },
   }
 
@@ -28,6 +22,7 @@
             <li><router-link :to="{ name: 'banners' }">Generated Banners</router-link></li>
             <li><router-link :to="{ name: 'bitcoin' }">Bitcoin</router-link></li>
             <li><router-link :to="{ name: 'components' }">Components</router-link></li>
+            <li><router-link :to="{ name: 'documentation' }">Documentation</router-link></li>
           </ul>
         </div>
       </div>
@@ -66,7 +61,7 @@
   #footer {
     text-align: center;
     padding: $footerHeight / 2 - 6 0 0 0;
-    color: #FFF;
+    color: #000;
   }
 
   #nav ul {
