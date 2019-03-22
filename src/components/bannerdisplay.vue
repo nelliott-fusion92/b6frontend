@@ -23,13 +23,17 @@
         processedHTML: null,
       }
     },
+
     mounted: function() {
-      axios.get('http://localhost:2048/build/banner_' + this.banner._id + '.html')
-      .then((d) => {  // need to update port # to be dynamic based on env
-        var bannerlink = {
-          bannerID: this.banner._id,
+      var jq = document.createElement('script')
+      jq.setAttribute('src', 'http://code.jquery.com/jquery-3.3.1.min.js')
+      document.getElementById('wombat-container').appendChild(jq)
+      var liqEl = document.createElement('script')
+      liqEl.innerHTML = `
+        var liqBanner = {
+          bannerID: '${this.banner._id}',
           tag: {
-            id: this.banner.id_counter,
+            id: ${this.banner.id_counter},
             tagName: 'tagname',
           },
           cacheBuster: '',
@@ -46,20 +50,12 @@
           ],
           mediaMacro: 'PREVIEW'
         };
-        bannerlink.sessionID = createUUID();
-        var old_id = 'liq_' +this.banner._id;
-        var sesh = 'liq_' + bannerlink.sessionID.replace(/-/g, '');
-        var re = new RegExp(old_id, 'g');
-        document.getElementById('wombat-container').innerHTML = d.data.replace(re, sesh)
-        //this.bannerHTML = d.data.replace(re, sesh)
-        console.log('banner loaded from wombat: ' + this.banner._id)
-        window.xxx = 1234;
-        console.log(window.xxx)
-        eval(sesh + '_main' + 'Banner.init(bannerlink)');
-      })
+      `
+      document.getElementById('wombat-container').appendChild(liqEl);
 
-
-
+      let scriptEl = document.createElement('script');
+      scriptEl.setAttribute('src', 'http://localhost:2048/js/wombat.js?a' + Math.floor(Math.random() * 9999));
+      document.getElementById('wombat-container').appendChild(scriptEl);
     },
   }
 
@@ -68,7 +64,8 @@
 <template>
 
   <div>
-    <div id="wombat-container" v-html="bannerHTML"></div>
+    <div id="wombat-container">
+    </div>
 
   </div>
 
