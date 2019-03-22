@@ -65,7 +65,7 @@
   <div class="bannerprop">
 
     <span v-if="!type">
-       {{_key}} <input @input="setBannerProperty" v-bind:_path="_path" :value="_item"  />
+       <span class="label">{{_key}}</span> <input @input="setBannerProperty" v-bind:_path="_path" :value="_item"  />
     </span>
     <span v-if="type === 'array'">
        <span class="arrayTitle">{{_key}}</span>
@@ -97,9 +97,31 @@
 
     position: relative;
   }
+  .bannerprop input {
+    display: block;
+    margin: 2px 0 11px 0;
+    background-color: #013043;
+    border: none;
+    border-radius: 2px;
+    outline: none;
+    padding: 5px;
+    color: #0EF;
+    font-size: 12px;
+    font-weight: bold;
+    font-family: 'Open Sans', sans-serif;
+    box-shadow: 2px 2px 2px #000920;
+    width: 300px;
+  }
 
   .bannerprop div {
     min-height: $minHeight;
+  }
+
+  .label {
+    color: #AF6;
+    font-weight: 400;
+    font-family: 'Exo';
+    font-size: 12px;
   }
 
 

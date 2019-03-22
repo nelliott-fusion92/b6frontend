@@ -1,6 +1,7 @@
 <script>
 
   import axios from 'axios'
+  import pageheader from '../components/pageheader.vue'
 
   export default {
     data: function(){
@@ -15,6 +16,9 @@
     },
     beforeDestroy () {
       clearInterval(this.timer)
+    },
+    components: {
+      pageheader
     },
     computed: {
       lastUpdated: function() {
@@ -38,13 +42,15 @@
 </script>
 
 <template>
-
-  <div v-if="BTCinfo.data">
-    <div>1 {{ BTCinfo.data.chartName}} =</div>
-    <div v-for="(bpi, key) in BTCinfo.data.bpi">
-      <span v-html="bpi.symbol"></span>{{ bpi.rate_float | formatCurrency }}
+  <div>
+    <pageheader v-bind:title="$route.name" />
+    <div class="btc" v-if="BTCinfo.data">
+      <div>1 {{ BTCinfo.data.chartName}} =</div>
+      <div v-for="(bpi, key) in BTCinfo.data.bpi">
+        <span v-html="bpi.symbol"></span>{{ bpi.rate_float | formatCurrency }}
+      </div>
+      <div class="lastupdated">Last updated {{ lastUpdated }}</div>
     </div>
-    <div class="lastupdated">Last updated {{ lastUpdated }}</div>
   </div>
 
 </template>
@@ -52,9 +58,16 @@
 <style lang="scss" scoped>
 
   @import '../../assets/theme.scss';
-
+  .btc {
+    font-family: 'Exo';
+    font-size: 15px;
+    line-height: 22px;
+    font-weight: 400;
+  }
   .lastupdated {
     color: $col;
+    font-weight: bold;
+    margin: 5px 0 0 0;
   }
 
 </style>

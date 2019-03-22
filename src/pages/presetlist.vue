@@ -2,6 +2,7 @@
 
   import axios from 'axios'
   import bannerlistitem from '../components/bannerlistitem.vue'
+  import pageheader from '../components/pageheader.vue'
   import down from '../../node_modules/@salesforce-ux/design-system/assets/icons/utility/down.svg'
 
   //var req = require.context('../../node_modules/@salesforce-ux/design-system/assets/icons/utility/', true, /\.svg$/);
@@ -20,6 +21,7 @@
     },
     components: {
       bannerlistitem,
+      pageheader,
       down
     },
     mounted () {
@@ -48,13 +50,14 @@
 <template>
 
 
-  <div class="slds-form-element">
+  <div class="slds-form-element" v-if="loadStatus">
+    <pageheader v-bind:title="$route.name" />
     <label class="slds-form-element__label" for="combobox-unique-id-6">Search</label>
     <div class="slds-form-element__control">
       <div class="slds-combobox_container slds-size_small">
         <div v-bind:class="{ 'slds-is-open': listOpen }" class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click" aria-expanded="false" aria-haspopup="listbox" role="combobox">
           <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right" role="none">
-            <input @click="listOpen = !listOpen" class="slds-input slds-combobox__input" id="combobox-unique-id-6" aria-activedescendant="listbox-option-unique-id-01" aria-controls="listbox-unique-id" autocomplete="off" role="textbox" type="text" placeholder="Select an Option" readonly=""
+            <input @click="listOpen = !listOpen" class="listlink slds-input slds-combobox__input" id="combobox-unique-id-6" aria-activedescendant="listbox-option-unique-id-01" aria-controls="listbox-unique-id" autocomplete="off" role="textbox" type="text" placeholder="Select a preset" readonly=""
               v-bind:value="this.selectedName" />
             <span class="slds-icon_container slds-icon-utility-down slds-input__icon slds-input__icon_right">
               <down class="slds-icon slds-icon slds-icon_x-small slds-icon-text-default" aria-hidden="true" width="20" height="20" viewBox="0 0 52 52" />
@@ -63,7 +66,7 @@
           <div id="listbox-unique-id" role="listbox">
             <ul class="slds-listbox slds-listbox_vertical slds-dropdown slds-dropdown_fluid" role="presentation">
               <li v-for="banner in presets" v-bind:banner="banner" :key="banner._id" role="presentation" class="slds-listbox__item">
-                <router-link :to="banner._id | bannerURL">
+                <router-link class="listlink" :to="banner._id | bannerURL">
                   <div @click="bannerClicked(banner)" class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small" role="option">
                     <span class="slds-media__figure slds-listbox__option-icon"></span>
                     <span class="slds-media__body">
@@ -104,6 +107,12 @@
 
   i {
 
+  }
+
+  .listlink {
+    font-family: 'Exo', sans-serif;
+    font-weight: normal;
+    color: #000;
   }
 
 </style>

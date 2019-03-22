@@ -1,11 +1,11 @@
 <script>
 
-  import pageheader from './components/pageheader.vue'
-
   export default {
     name: 'app',
-    components: {
-      pageheader
+    data() {
+      return {
+        prevHeight: 0,
+      };
     },
   }
 
@@ -27,12 +27,13 @@
         </div>
       </div>
       <div id="main">
-        <pageheader v-bind:title="$route.name" />
-        <router-view></router-view>
+          <transition name="page" mode="out-in">
+             <router-view></router-view>
+          </transition>
         <div class="push"></div>
       </div>
     </div>
-    <footer id="footer">© Liquidus 2019</footer>
+    <footer id="footer">© Liquidus Marketing 2019</footer>
   </div>
 
 </template>
@@ -49,6 +50,7 @@
   }
   #main {
     padding: 5px 0 0 15px;
+    margin: 28px 0 0 13px;
   }
   .wrapper {
     min-height: 100%;
@@ -60,20 +62,30 @@
 
   #footer {
     text-align: center;
-    padding: $footerHeight / 2 - 6 0 0 0;
-    color: #000;
+    padding: $footerHeight 0 0 0;
+    font-size: 14px;
+    border-top: dotted 1px #DFF;
+
   }
 
   #nav ul {
-    margin: 0 0 0 28px;
+    margin: 0 0 0 8px;
     padding: 0;
   }
 
   #nav ul li {
     display: inline-block;
     list-style-type: none;
-    margin: 0 5px 0 0;
+    margin: 0 20px 0 0;
     padding: 0;
+    font-size: 14px;
+  }
+  .page-enter-active, .page-leave-active {
+    transition: opacity .6s, transform .8s cubic-bezier(0.685, 0.085, 0.355, 1.000);
+  }
+  .page-enter, .page-leave-to {
+    opacity: 0;
+    transform: translateX(400px) scale(3) translateX(400px) translateY(300px);
   }
 
 </style>

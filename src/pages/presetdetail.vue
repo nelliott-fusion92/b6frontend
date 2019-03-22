@@ -1,6 +1,7 @@
 <script>
 
   import bannerdetailitem from '../components/bannerdetailitem.vue'
+  import pageheader from '../components/pageheader.vue'
 
   export default {
     props: [
@@ -10,7 +11,8 @@
       this.$store.dispatch('GET_PRESET', this.id)
     },
     components: {
-      bannerdetailitem
+      bannerdetailitem,
+      pageheader
     },
     computed: {
       preset: function() {
@@ -22,10 +24,13 @@
 </script>
 
 <template>
-
   <div>
-    <bannerdetailitem v-if="preset" v-bind:banner="preset" />
+    <pageheader v-bind:title="$route.name" />
+    <div v-if="loadStatus">
+      <bannerdetailitem v-if="preset" v-bind:banner="preset" />
+    </div>
   </div>
+
 
 </template>
 

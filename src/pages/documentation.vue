@@ -1,11 +1,11 @@
 <script>
 
   import axios from 'axios'
-
+  import pageheader from '../components/pageheader.vue'
   export default {
 
     components: {
-
+      pageheader
     },
 
     mounted () {
@@ -24,7 +24,8 @@
 <template>
 
   <div>
-    Docs
+      <pageheader v-bind:title="$route.name" />
+      Docs
   </div>
 
 </template>
