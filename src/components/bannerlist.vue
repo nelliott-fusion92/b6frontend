@@ -3,6 +3,7 @@
   import axios from 'axios'
   import bannerlistitem from './bannerlistitem.vue'
   import down from '../../node_modules/@salesforce-ux/design-system/assets/icons/utility/down.svg'
+  import { store, mutations } from '../store'
 
   //var req = require.context('../../node_modules/@salesforce-ux/design-system/assets/icons/utility/', true, /\.svg$/);
   //req.keys().forEach(req);
@@ -14,7 +15,7 @@
     ],
     data: function(){
       return {
-        banners: null,
+        store,
         listOpen: false,
         selectedName: 'Select an option',
       }
@@ -24,18 +25,20 @@
       down
     },
     mounted () {
-      axios
-        .get(`${this.api_base}v1/banners`)
-        .then((response) => {
-          this.banners = response.data
-        })
+      this.getBanners()
     },
     methods: {
-      listingClicked(_name) {
-        console.log(_name)
+      getBanners: mutations.getBanners,
+      bannerClicked(_banner) {
+        console.log(_banner.name)
         this.listOpen = !this.listOpen
-        this.selectedName = _name
+        this.selectedName = _banner.name
       },
+    },
+    filters: {
+      bannerURL: function(id) {
+        return `/banners/${id}`
+      }
     }
   }
 
@@ -58,13 +61,15 @@
           </div>
           <div id="listbox-unique-id" role="listbox">
             <ul class="slds-listbox slds-listbox_vertical slds-dropdown slds-dropdown_fluid" role="presentation">
-              <li v-for="banner in banners" v-bind:banner="banner" :key="banner._id" role="presentation" class="slds-listbox__item">
-                <div @click="listingClicked(banner.name)" class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small" role="option">
-                  <span class="slds-media__figure slds-listbox__option-icon"></span>
-                  <span class="slds-media__body">
-                    <span class="slds-truncate" :title="banner.name"> {{ banner.name }}</span>
-                  </span>
-                </div>
+              <li v-for="banner in store.banners" v-bind:banner="banner" :key="banner._id" role="presentation" class="slds-listbox__item">
+                <router-link :to="banner._id | bannerURL">
+                  <div @click="bannerClicked(banner)" class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small" role="option">
+                    <span class="slds-media__figure slds-listbox__option-icon"></span>
+                    <span class="slds-media__body">
+                      <span class="slds-truncate" :title="banner.name"> {{ banner.name }}</span>
+                    </span>
+                  </div>
+                </router-link>
               </li>
             </ul>
           </div>

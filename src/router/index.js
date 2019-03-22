@@ -25,16 +25,12 @@ const r = new VueRouter({
       path: '/banners',
       name: 'banners',
       component: Bannerlist,
-      props: {
-        api_base,
-      }
     },
     {
       path: '/banners/:id',
       name: 'banner',
       component: Bannerdetail,
       props: (route) => ({
-        api_base,
         id: route.params.id,
       })
     },
@@ -42,16 +38,12 @@ const r = new VueRouter({
       path: '/presets',
       name: 'presets',
       component: Presetlist,
-      props: {
-        api_base,
-      }
     },
     {
       path: '/presets/:id',
       name: 'preset',
       component: Presetdetail,
       props: (route) => ({
-        api_base,
         id: route.params.id,
       })
     },
@@ -59,9 +51,6 @@ const r = new VueRouter({
       path: '/components',
       name: 'components',
       component: Componentlist,
-      props: {
-        api_base,
-      }
     },
     {
       path: '*',

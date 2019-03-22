@@ -9,6 +9,7 @@
       }
     },
     mounted () {
+      console.log('rootstore', this.$root)
       this.timer = setInterval(this.getData, 30000)
       this.getData()
     },

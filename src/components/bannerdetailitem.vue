@@ -1,22 +1,20 @@
 <script>
 
-  import axios from 'axios'
-
   export default {
     props: [
-      'banner',
-    ]
+      'banner'
+    ],
   }
 
 </script>
 
 <template>
 
-  <div v-if="banner" class="bannerdetail">
+  <div v-if="this.banner.name" class="bannerdetail">
     <div>
-      <h3 class="name">{{ banner.name }}</h3>
-      <div class="dimensions">{{ banner.width }} x {{ banner.height }}</div>
-      <div class="description">{{ banner.description }}</div>
+      <h3 class="name">{{ this.banner.name }}</h3>
+      <div class="dimensions">{{ this.banner.width }} x {{ this.banner.height }}</div>
+      <div class="description">{{ this.banner.description }}</div>
     </div>
   </div>
 

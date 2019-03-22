@@ -1,28 +1,27 @@
 <script>
 
-  import axios from 'axios'
   import bannerdetailitem from './bannerdetailitem.vue'
+  import { store, mutations } from '../store'
 
   export default {
     props: [
       'id',
-      'api_base'
     ],
     data: function(){
       return {
-        banner: null
+        isLoaded: false,
+        store,
       }
     },
     components: {
       bannerdetailitem
     },
-    mounted () {
-      axios
-        .get(`${this.api_base}v1/presets/${this.id}`)
-        .then((response) => {
-          this.banner = response.data
-        })
-    }
+    beforeMount: function() {
+      this.getPreset(this.id)
+    },
+    methods: {
+      getPreset: mutations.getPreset
+    },
   }
 
 </script>
@@ -30,7 +29,7 @@
 <template>
 
   <div>
-    <bannerdetailitem v-if="banner" v-bind:banner="banner" />
+    <bannerdetailitem v-if="isLoaded" v-bind:banner="store.currentPreset" />
   </div>
 
 </template>

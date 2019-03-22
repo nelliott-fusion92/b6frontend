@@ -1,11 +1,18 @@
 <script>
 
   import pageheader from './components/pageheader.vue'
+  import { store, mutations } from './store'
+
   export default {
     name: 'app',
     components: {
       pageheader
-    }
+    },
+    data: () => {
+      return {
+        store
+      }
+    },
   }
 
 </script>

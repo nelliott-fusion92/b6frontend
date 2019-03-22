@@ -1,28 +1,29 @@
 <script>
 
-  import axios from 'axios'
-  import bannerdetailitem from './bannerdetailitem.vue'
+  import Bannerdetailitem from './bannerdetailitem.vue'
+  import Bannerdisplay from './bannerdisplay.vue'
+  import { store, mutations } from '../store'
 
   export default {
     props: [
       'id',
-      'api_base',
     ],
     data: function(){
       return {
-        banner: null
+        isLoaded: false,
+        store,
       }
     },
     components: {
-      bannerdetailitem
+      Bannerdetailitem,
+      Bannerdisplay,
     },
-    mounted () {
-      axios
-        .get(`${this.api_base}v1/banners/${this.id}`)
-        .then((response) => {
-          this.banner = response.data
-        })
-    }
+    beforeMount: function() {
+      this.getBanner(this.id)
+    },
+    methods: {
+      getBanner: mutations.getBanner
+    },
   }
 
 </script>
@@ -30,7 +31,8 @@
 <template>
 
   <div>
-    <bannerdetailitem v-if="banner" v-bind:banner="banner" />
+    <Bannerdetailitem v-if="isLoaded" v-bind:banner="store.currentBanner" />
+    <Bannerdisplay v-if="isLoaded" v-bind:banner="store.currentBanner" />
   </div>
 
 </template>
