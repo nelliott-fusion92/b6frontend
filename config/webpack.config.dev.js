@@ -46,15 +46,18 @@ module.exports = {
         ]
       },
       {
-        test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
+        test: /\.svg$/,
+        loader: 'vue-svg-loader',
+      },
+      {
+        test: /\.(woff(2)?|ttf|eot)(\?v=\d+\.\d+\.\d+)?$/,
         use: [{
           loader: 'file-loader',
           options: {
             name: '[name].[ext]',
-            outputPath: path.join(__dirname, '../dist/fonts'),
           }
         }]
-      }
+      },
     ]
   },
   plugins: [
@@ -63,7 +66,7 @@ module.exports = {
       filename: 'index.html',
       template: 'index.html',
       inject: true
-    })
+    }),
   ],
   node: {
     fs: 'empty'

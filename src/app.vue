@@ -11,34 +11,55 @@
 </script>
 
 <template>
-
   <div id="app">
-    <div id="header">
-      <h1>Bannerlink 6</h1>
-      <div id="nav">
-        <ul>
-          <li><router-link :to="{ name: 'presets' }">Presets</router-link></li>
-          <li><router-link :to="{ name: 'banners' }">Generated Banners</router-link></li>
-          <li><router-link :to="{ name: 'bitcoin' }">Bitcoin</router-link></li>
-          <li><router-link :to="{ name: 'components' }">Components</router-link></li>
-        </ul>
+    <div class="wrapper">
+      <div id="header">
+        <h1>Bannerlink 6</h1>
+        <div id="nav">
+          <ul>
+            <li><router-link :to="{ name: 'presets' }">Presets</router-link></li>
+            <li><router-link :to="{ name: 'banners' }">Generated Banners</router-link></li>
+            <li><router-link :to="{ name: 'bitcoin' }">Bitcoin</router-link></li>
+            <li><router-link :to="{ name: 'components' }">Components</router-link></li>
+          </ul>
+        </div>
+      </div>
+      <div id="main">
+        <pageheader v-bind:title="$route.name" />
+        <router-view></router-view>
+        <div class="push"></div>
       </div>
     </div>
-    <pageheader v-bind:title="$route.name" />
-    <router-view></router-view>
-    <div id="footer">© Liquidus 2019</div>
+    <footer id="footer">© Liquidus 2019</footer>
   </div>
 
 </template>
 
 <style lang="scss">
-
+  @import url('../node_modules/@salesforce-ux/design-system/assets/styles/salesforce-lightning-design-system.min.css');
+  @import '../assets/reset.scss';
   @import '../assets/theme.scss';
+  #app {
+    height: 100%;
+  }
+  #header {
+    height: 70px;
+  }
+  #main {
+    padding: 5px 0 0 15px;
+  }
+  .wrapper {
+    min-height: 100%;
+    margin-bottom: $footerHeight * -1;
+  }
+  #footer, .push {
+    height: $footerHeight;
+  }
 
   #footer {
-    position: fixed;
-    left: 0;
-    bottom: 0;
+    text-align: center;
+    padding: $footerHeight / 2 - 6 0 0 0;
+    color: #FFF;
   }
 
   #nav ul {

@@ -2,6 +2,11 @@
 
   import axios from 'axios'
   import bannerlistitem from './bannerlistitem.vue'
+  import down from '../../node_modules/@salesforce-ux/design-system/assets/icons/utility/down.svg'
+
+  //var req = require.context('../../node_modules/@salesforce-ux/design-system/assets/icons/utility/', true, /\.svg$/);
+  //req.keys().forEach(req);
+
 
   export default {
     props: [
@@ -11,11 +16,12 @@
       return {
         banners: null,
         listOpen: false,
-        selectedName: 'Select an option'
+        selectedName: 'Select an option',
       }
     },
     components: {
-      bannerlistitem
+      bannerlistitem,
+      down
     },
     mounted () {
       axios
@@ -29,7 +35,7 @@
         console.log(_name)
         this.listOpen = !this.listOpen
         this.selectedName = _name
-      }
+      },
     }
   }
 
@@ -46,11 +52,8 @@
           <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right" role="none">
             <input @click="listOpen = !listOpen" class="slds-input slds-combobox__input" id="combobox-unique-id-6" aria-activedescendant="listbox-option-unique-id-01" aria-controls="listbox-unique-id" autocomplete="off" role="textbox" type="text" placeholder="Select an Option" readonly=""
               v-bind:value="this.selectedName" />
-            <span class="slds-icon_container slds-icon-utility-down slds-input__icon slds-input__icon_right" title="Description of icon when needed">
-              <svg class="slds-icon slds-icon slds-icon_x-small slds-icon-text-default" aria-hidden="true">
-                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#down" />
-              </svg>
-              <span class="slds-assistive-text">Description of icon when needed</span>
+            <span class="slds-icon_container slds-icon-utility-down slds-input__icon slds-input__icon_right">
+              <down class="slds-icon slds-icon slds-icon_x-small slds-icon-text-default" aria-hidden="true" width="20" height="20" viewBox="0 0 52 52" />
             </span>
           </div>
           <div id="listbox-unique-id" role="listbox">
@@ -77,11 +80,24 @@
 
 <style lang="css" scoped>
 
-  @import url('../../node_modules/@salesforce-ux/design-system/assets/styles/salesforce-lightning-design-system.min.css');
+
   #listbox-id-1 {
     width: 300px;
     left: 155px;
     float: none;
+  }
+  svg {
+    left: 10px;
+    height: 100%;
+
+  }
+  svg path {
+    fill: #000;
+    background-size: 20px 20px;
+  }
+
+  i {
+
   }
 
 </style>
