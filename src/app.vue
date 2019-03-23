@@ -51,6 +51,8 @@
     padding: 5px 0 0 15px;
     margin: 28px 0 0 13px;
     grid-row-start: 2;
+    overflow-y: hidden;
+    overflow-x: hidden;
   }
   #footer {
     grid-row-start: 2;
@@ -59,6 +61,7 @@
     font-size: 14px;
     border-top: dotted 1px #DFF;
     grid-row-start: 3;
+    padding: $footerHeight / 2 + 7 0 0 0;
   }
 
   #nav {
