@@ -58,7 +58,7 @@
     overflow-x: hidden;
     overflow-y: auto;
     width: 500px;
-    max-height: 600px;
+    max-height: 900px;
     font-family: 'Open Sans', sans-serif;
     font-weight: normal;
     box-sizing: content-box;

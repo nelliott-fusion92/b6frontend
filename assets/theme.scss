@@ -4,22 +4,26 @@
 
 $col: #0BE;
 $errorCol: #F00;
-$footerHeight: 20px;
+$footerHeight: 100px;
 
 html {
   height: 100%;
+  background-color: #172B3A;
 }
 
 body {
-  height: 100%;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  min-height: 100%;
   font-family: 'Exo', sans-serif;
   font-size: 12px;
   -webkit-font-smoothing: antialiased;
-  background-color: #172B3A;
+  font-smoothing: antialiased;
+
+
   color: #FFF;
   padding: 40px;
   overflow-x: hidden;
-  overflow-y: hidden;
   line-height: 16px;
   font-weight: 600;
 }
@@ -29,7 +33,6 @@ label {
 }
 
 h1 {
-  -webkit-font-smoothing: antialiased;
   font-size: 34px;
   padding: 5px;
   margin: 0 0 20px 0;
@@ -38,32 +41,13 @@ h1 {
 }
 
 h2 {
-  -webkit-font-smoothing: antialiased;
   font-size: 23px;
   font-weight: normal;
   margin: 0 0 15px 0;
 }
-#nav {
-  -webkit-font-smoothing: antialiased;
-  font-family: 'Roboto', sans-serif;
-  font-size: 20px;
-  font-weight: 200;
+h3 {
+  margin: 0 0 10px 0;
 }
-#nav a {
-  color: #6FE !important;
-  text-decoration: none;
-  text-shadow: 2px 2px 4px #013;
-}
-
-#nav a:visited {
-  color: #6FE !important;
-}
-
-#nav a:hover {
-  text-decoration: underline;
-}
-
-
 
 input a {
   font-family: 'Exo', sans-serif;

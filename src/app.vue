@@ -13,27 +13,25 @@
 
 <template>
   <div id="app">
-    <div class="wrapper">
-      <div id="header">
-        <h1>Bannerlink 6</h1>
-        <div id="nav">
-          <ul>
-            <li><router-link :to="{ name: 'presets' }">Presets</router-link></li>
-            <li><router-link :to="{ name: 'banners' }">Generated Banners</router-link></li>
-            <li><router-link :to="{ name: 'bitcoin' }">Bitcoin</router-link></li>
-            <li><router-link :to="{ name: 'components' }">Components</router-link></li>
-            <li><router-link :to="{ name: 'documentation' }">Documentation</router-link></li>
-          </ul>
-        </div>
-      </div>
-      <div id="main">
-          <transition name="page" mode="out-in">
-             <router-view></router-view>
-          </transition>
-        <div class="push"></div>
+    <div id="header">
+      <h1>Bannerlink 6</h1>
+      <div id="nav">
+        <ul>
+          <li><router-link :to="{ name: 'presets' }">Presets</router-link></li>
+          <li><router-link :to="{ name: 'banners' }">Generated Banners</router-link></li>
+          <li><router-link :to="{ name: 'bitcoin' }">Bitcoin</router-link></li>
+          <li><router-link :to="{ name: 'components' }">Components</router-link></li>
+          <li><router-link :to="{ name: 'documentation' }">Documentation</router-link></li>
+        </ul>
       </div>
     </div>
-    <footer id="footer">© Liquidus Marketing 2019</footer>
+    <div id="main">
+      <transition name="page" mode="out-in">
+         <router-view></router-view>
+      </transition>
+      <div class="push"></div>
+    </div>
+    <footer id="footer"><span>© Liquidus Marketing 2019</span></footer>
   </div>
 
 </template>
@@ -43,29 +41,44 @@
   @import '../assets/reset.scss';
   @import '../assets/theme.scss';
   #app {
-    height: 100%;
+    display: grid;
+    grid-template-rows: 70px auto $footerHeight;
   }
   #header {
-    height: 70px;
+    grid-row-start: 1;
   }
   #main {
     padding: 5px 0 0 15px;
     margin: 28px 0 0 13px;
+    grid-row-start: 2;
   }
-  .wrapper {
-    min-height: 100%;
-    margin-bottom: $footerHeight * -1;
-  }
-  #footer, .push {
-    height: $footerHeight;
-  }
-
   #footer {
+    grid-row-start: 2;
+    grid-row-end: 3;
     text-align: center;
-    padding: $footerHeight 0 0 0;
     font-size: 14px;
     border-top: dotted 1px #DFF;
+    grid-row-start: 3;
+  }
 
+  #nav {
+
+    font-family: 'Roboto', sans-serif;
+    font-size: 20px;
+    font-weight: 200;
+  }
+  #nav a {
+    color: #6FE !important;
+    text-decoration: none;
+    text-shadow: 2px 2px 4px #013;
+  }
+
+  #nav a:visited {
+    color: #6FE !important;
+  }
+
+  #nav a:hover {
+    text-decoration: underline;
   }
 
   #nav ul {
@@ -85,7 +98,7 @@
   }
   .page-enter, .page-leave-to {
     opacity: 0;
-    transform: translateX(400px) scale(3) translateX(400px) translateY(300px);
+    transform: translateX(400px) scale(2.5) translateX(700px) translateY(300px);
   }
 
 </style>
