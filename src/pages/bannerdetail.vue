@@ -4,6 +4,7 @@
 
   import Bannerdetailitem from '../components/bannerdetailitem.vue'
   import Bannerdisplay from '../components/bannerdisplay.vue'
+  import Bannerprop from '../components/bannerprop.vue'
   import pageheader from '../components/pageheader.vue'
 
   export default {
@@ -13,6 +14,7 @@
     components: {
       Bannerdetailitem,
       Bannerdisplay,
+      Bannerprop,
       pageheader,
     },
     beforeMount () {
@@ -33,8 +35,9 @@
         }
         return false
       },
-      test: function() {
-        console.log(this.$store.state.currentBanner)
+      test: function(e) {
+        console.log(e)
+        this.$store.dispatch('SET_BANNER_PROPERTY', e)
       },
       undo: function() {
         this.$store.commit('undo')
@@ -49,11 +52,21 @@
   <div v-if="loadStatus">
     <pageheader v-bind:title="$route.name" />
     <Bannerdetailitem v-if="banner._id" v-bind:banner="banner" />
-    <div class="banner-state" v-for="(state, key, index) in banner.states">
+    <div class="banner-state" v-for="(state, key) in banner.states">
       <span class="state-title">{{ state.name }}</span>
-      <div class="component" v-for="(comp, compkey, index) in state.components">
+      <div class="component" v-for="(comp, compkey) in state.components">
         <span class="component-title">{{ comp.name }}</span>
-        <div class="prop" v-if="prop.type != 'object' " v-for="(prop, compkey, index) in $store.state.components[comp.name].editableParameters">
+        <Bannerprop
+          v-for="(prop, propkey) in $store.state.components[comp.name].editableParameters"
+          :value="comp.options[propkey]"
+          :componentName="comp.name"
+          :propkey="propkey"
+          @input="test"
+          :path="`states[${key}].components[${compkey}].options.${propkey}`"
+          :type="prop.type"
+          :key="propkey"
+        />
+        <div class="prop" v-if="prop.type != 'object' " v-for="(prop, compkey) in $store.state.components[comp.name].editableParameters">
           <label>{{compkey}} ({{prop.type}})</label>
           <div v-if="prop.type ==='color'">
             <input @input="test" type="color" v-model="comp.options[compkey]" />
@@ -69,7 +82,7 @@
         </div>
         <div class="prop objectprop" v-else>
           <label class="objectlabel">{{compkey}}</label>
-          <div class="nestedprops" v-for="(subprop, subkey, subindex) in $store.state.components[comp.name].editableParameters[compkey].props">
+          <div class="nestedprops" v-for="(subprop, subkey) in $store.state.components[comp.name].editableParameters[compkey].props">
             <label>{{subkey}} ({{subprop.type}})</label>
             <input v-model="comp.options[compkey][subkey]" />
           </div>
@@ -143,11 +156,13 @@
     background-color: #001122;
   }
   .prop {
+    display:none;
+    width: 350px;
     color: #0F0;
   }
   .objectprop {
     background-color: #034710;
-    display: inline-block;
+    display: none;
   }
   .objectprop input {
     background-color: #014330;

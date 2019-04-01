@@ -100,15 +100,6 @@ const store = new Vuex.Store({
       const v = _.get(state.currentBanner, path)
       return v
     },
-    getBannerPropertyType: (state) => (path) => {
-      const type = null
-      console.log(state)
-      if(path.indexOf('.') == -1){
-        const type = _.get(state, `components.Banner.editableParameters.${ path }`).type
-      }
-      console.log(type)
-      return type
-    }
   },
 
   mutations: {
@@ -154,13 +145,13 @@ const store = new Vuex.Store({
     },
 
     setBannerProperty: function(currentState, payload) {
-      if(this.getters.getBannerPropertyType(payload.path)) {
-          pushState()
-        _.set(currentState.currentBanner, payload.path, payload.val)
-        _.get(currentState.currentBanner, payload.path)
-        console.log(currentState.currentBanner)
-        //_.set(currentState.currentBanner, payload.path, payload.val)
-      }
+      console.log('setbannerprop')
+      pushState()
+      _.set(currentState.currentBanner, payload.path, payload.val)
+      console.log(_.get(currentState.currentBanner, payload.path))
+      console.log(currentState.currentBanner)
+      //_.set(currentState.currentBanner, payload.path, payload.val)
+
     },
   },
 })
