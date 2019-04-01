@@ -17,14 +17,27 @@
       Bannerprop,
       pageheader,
     },
+    beforeMount () {
+      this.$store.dispatch('GET_COMPONENTS')
+    },
     mounted () {
       this.$store.dispatch('GET_BANNER', this.id)
-      this.$store.dispatch('GET_COMPONENTS')
     },
     computed: {
       banner: function() {
         return this.$store.state.currentBanner
       },
+    },
+    methods: {
+      isObject: function(type) {
+        if(type == 'object'){
+          return true
+        }
+        return false
+      },
+      test: function() {
+        console.log(this.$store.state.currentBanner)
+      }
     },
   }
 
@@ -35,19 +48,90 @@
   <div v-if="loadStatus">
     <pageheader v-bind:title="$route.name" />
     <Bannerdetailitem v-if="banner._id" v-bind:banner="banner" />
-    <div class="bannerprops">
-      <Bannerprop class="bannerprop" v-if="banner._id" v-for="(item, key, index) in banner" v-bind:_path="key" v-bind:_item="item" v-bind:_key="key" :key="key" />
+    <div class="banner-state" v-for="(state, key, index) in banner.states">
+      <span class="state-title">{{ state.name }}</span>
+      <div class="component" v-for="(comp, compkey, index) in state.components">
+        <span class="component-title">{{ comp.name }}</span>
+        <div class="prop" v-if="prop.type != 'object' " v-for="(prop, compkey, index) in $store.state.components[comp.name].editableParameters">
+          <label>{{compkey}} ({{prop.type}})</label>
+          <div v-if="prop.type ==='color'">
+            <input @input="test" type="color" v-model="comp.options[compkey]" />
+          </div>
+          <div v-else>
+            <input @input="test" v-model="comp.options[compkey]" />
+          </div>
+        </div>
+        <div class="prop" v-else>
+          <label class="objectlabel">{{compkey}}</label>
+          <div class="nestedprops" v-for="(subprop, subkey, subindex) in $store.state.components[comp.name].editableParameters[compkey].props">
+            <label>{{subkey}} ({{subprop.type}})</label>
+            <input v-model="comp.options[compkey][subkey]" />
+          </div>
+        </div>
+      </div>
     </div>
-    <!-- <Bannerdisplay v-if="banner._id" v-bind:banner="banner" /> -->
-
   </div>
-
 
 </template>
 
 <style lang="scss" scoped>
 
   @import '../../assets/theme.scss';
+  input {
+    display: block;
+    margin: 2px 0 11px 0;
+    background-color: #013043;
+    border: none;
+    border-radius: 2px;
+    outline: none;
+    padding: 5px;
+    color: #0EF;
+    font-size: 12px;
+    font-weight: bold;
+    font-family: 'Open Sans', sans-serif;
+    box-shadow: 2px 2px 2px #000920;
+    width: 300px;
+  }
+  input[type='color'] {
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    background-color: rgba(0,0,0,0);
+    box-shadow: none;
+  }
+  label {
+    color: #AF6 !important;
+    font-weight: bold;
+    font-family: 'Exo';
+    font-size: 12px;
+    text-transform: uppercase;
+  }
+  .objectlabel {
+    color: #0F0 !important;
+  }
+  .component-title {
+    display: block;
+    margin: 0 0 10px 0;
+    font-size: 16px;
+  }
+  .banner-state {
+    color: #2383FF;
+    font-size: 18px;
+  }
+  .banner-state div {
+    margin: 0 0 0 10px;
+  }
+  .state-title {
+    display: block;
+    margin: 0 0 10px 0;
+  }
+  .component {
+    font-size: 12px;
+    color: #FF0;
+  }
+  .prop {
+    color: #0F0;
+  }
   .bannerprops::-webkit-scrollbar { width: 10px !important; opacity: 0.5 !important; }
   .bannerprops {
     background-color: #001828 !important;
