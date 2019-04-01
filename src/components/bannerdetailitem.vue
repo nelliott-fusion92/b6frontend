@@ -25,7 +25,7 @@
   @import '../../assets/theme.scss';
 
   .name {
-    font-size: 18px;
+    font-size: 28px;
     font-weight: bold;
 
   }

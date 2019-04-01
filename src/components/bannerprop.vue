@@ -11,6 +11,7 @@
       'path',
       'key',
       'propkey',
+      'options',
     ],
     data () {
       return {
@@ -18,13 +19,20 @@
       }
     },
     methods: {
-      handleInput: function() {
+      handleInput: function(e) {
         this.$emit('input', {
           path: this.path,
           val: this.content,
-        });
+        })
       },
-      handleInputObject: function(e) {        
+      handleInputSelect: function(e) {
+        this.$emit('input', {
+          path: this.path,
+          val: e.target.options[e.target.options.selectedIndex].value,
+        })
+        console.log(e.target.options[e.target.options.selectedIndex].value)
+      },
+      handleInputObject: function(e) {
         this.$emit('input', e);
       },
     },
@@ -33,15 +41,24 @@
 </script>
 
 <template>
-  <div class="bannerprop">
+  <div class="prop">
+    <label>{{propkey}}</label>
     <div v-if="type === 'color'">
-      color
+      <input type="color" v-model="content" @input="handleInput" />
+    </div>
+    <div v-else-if="options">
+      <select :value="content" @input="handleInputSelect">
+        <option value=""></option>
+        <option selected :value="content">{{content}}</option>        
+        <option v-for="val in options" v-if="val != content" :value="val">{{val}}</option>
+      </select>
     </div>
     <div v-else-if="type === 'object'">
-      <label>{{propkey}}</label>
       <Bannerprop
+        class="objectprop"
         v-for="(subprop, subpropkey) in $store.state.components[this.componentName].editableParameters[this.propkey].props"
         :key="subpropkey"
+        :componentName="componentName"
         :value="content[subpropkey]"
         :propkey="subpropkey"
         @input="handleInputObject"
@@ -50,7 +67,6 @@
       />
     </div>
     <div v-else>
-      <label>{{propkey}}</label>
       <input v-model="content" @input="handleInput" />
     </div>
   </div>
@@ -62,7 +78,8 @@
   @import '../../assets/theme.scss';
   input, select {
     display: block;
-    margin: 2px 0 11px 0;
+    margin: 5px 0 11px 0;
+    height: 24px;
     background-color: #013043;
     border: none;
     border-radius: 2px;
@@ -76,11 +93,37 @@
     width: 300px;
   }
   input[type='color'] {
+    display:block;
     width: 30px;
     height: 30px;
     padding: 0;
     background-color: rgba(0,0,0,0);
     box-shadow: none;
+  }
+  label {
+    color: #AF6 !important;
+    font-weight: bold;
+    font-family: 'Exo';
+    font-size: 12px;
+    text-transform: uppercase;
+  }
+  .objectlabel {
+    color: #0F0 !important;
+  }
+  .prop {
+    display:inline-block;
+    width: 350px;
+    color: #0F0;
+    vertical-align:top;
+  }
+  .objectprop {
+    padding: 10px;
+    background-color: #034710;
+    vertical-align:top;
+  }
+  .objectprop input {
+    background-color: #014330;
+    color: #AF0;
   }
 
 </style>

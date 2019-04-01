@@ -148,9 +148,7 @@ const store = new Vuex.Store({
       console.log('setbannerprop')
       pushState()
       _.set(currentState.currentBanner, payload.path, payload.val)
-      console.log(_.get(currentState.currentBanner, payload.path))
-      console.log(currentState.currentBanner)
-      //_.set(currentState.currentBanner, payload.path, payload.val)
+      console.log(payload.path + ': ' + this.getters.getBannerProperty(payload.path))
 
     },
   },
@@ -161,7 +159,7 @@ let historyIndex = 0
 
 function pushState() {
   history.unshift(_.clone(store.state))
-  log('history', history)
+  log('state pushed', history)
 }
 
 export default store
