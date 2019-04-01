@@ -9,6 +9,7 @@ import Presetlist from '../pages/presetlist.vue'
 import Presetdetail from '../pages/presetdetail.vue'
 import Componentlist from '../pages/components.vue'
 import Documentation from '../pages/documentation.vue'
+import Ensembles from '../pages/ensembles.vue'
 import Errorpage from '../pages/errorpage.vue'
 
 Vue.use(VueRouter)
@@ -57,6 +58,11 @@ const r = new VueRouter({
       path: '/documentation',
       name: 'documentation',
       component: Documentation,
+    },
+    {
+      path: '/ensembles',
+      name: 'ensembles',
+      component: Ensembles,
     },
     {
       path: '*',

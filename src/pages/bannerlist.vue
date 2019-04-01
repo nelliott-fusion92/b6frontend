@@ -45,7 +45,7 @@
 
 <template>
 
-  <div>
+  <div v-if="loadStatus">
     <pageheader v-bind:title="$route.name" />
     <div class="slds-form-element">
       <label class="slds-form-element__label" for="combobox-unique-id-6">Search</label>

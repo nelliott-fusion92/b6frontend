@@ -41,6 +41,7 @@ const store = new Vuex.Store({
     banners: [],
     presets: [],
     components: [],
+    ensembles: [],
     currentPreset: {},
     currentBanner: {},
     loadStatus: 'LOADING',
@@ -80,6 +81,11 @@ const store = new Vuex.Store({
       commit('setComponents', data.data)
     },
 
+    GET_ENSEMBLES: async function({ commit }) {
+      const data = []
+      commit('getEnsembles', data)
+    },
+
     SET_BANNER_PROPERTY: function({ commit }, payload) {
       console.log(payload)
       commit('setBannerProperty', payload)
@@ -96,9 +102,11 @@ const store = new Vuex.Store({
     },
     getBannerPropertyType: (state) => (path) => {
       const type = null
+      console.log(state)
       if(path.indexOf('.') == -1){
         const type = _.get(state, `components.Banner.editableParameters.${ path }`).type
       }
+      console.log(type)
       return type
     }
   },
@@ -141,11 +149,16 @@ const store = new Vuex.Store({
       currentState.components = data
     },
 
+    setEnsembles: function(currentState, data) {
+      currentState.ensembles = data
+    },
+
     setBannerProperty: function(currentState, payload) {
-        if(this.getters.getBannerPropertyType(payload.path)) {
+      if(this.getters.getBannerPropertyType(payload.path)) {
           pushState()
         _.set(currentState.currentBanner, payload.path, payload.val)
         _.get(currentState.currentBanner, payload.path)
+        console.log(currentState.currentBanner)
         //_.set(currentState.currentBanner, payload.path, payload.val)
       }
     },
