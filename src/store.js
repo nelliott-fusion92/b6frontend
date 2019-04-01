@@ -114,7 +114,7 @@ const store = new Vuex.Store({
   mutations: {
 
     undo: function(currentState, data){
-
+      currentState.currentBanner = history[0].currentBanner
     },
 
     redo: function(currentState, data){

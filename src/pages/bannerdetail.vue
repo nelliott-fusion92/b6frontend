@@ -4,7 +4,6 @@
 
   import Bannerdetailitem from '../components/bannerdetailitem.vue'
   import Bannerdisplay from '../components/bannerdisplay.vue'
-  import Bannerprop from '../components/bannerprop.vue'
   import pageheader from '../components/pageheader.vue'
 
   export default {
@@ -14,7 +13,6 @@
     components: {
       Bannerdetailitem,
       Bannerdisplay,
-      Bannerprop,
       pageheader,
     },
     beforeMount () {
@@ -37,7 +35,10 @@
       },
       test: function() {
         console.log(this.$store.state.currentBanner)
-      }
+      },
+      undo: function() {
+        this.$store.commit('undo')
+      },
     },
   }
 
@@ -57,11 +58,16 @@
           <div v-if="prop.type ==='color'">
             <input @input="test" type="color" v-model="comp.options[compkey]" />
           </div>
+          <div v-else-if="prop.options">
+            <select @input="test" type="color" v-model="comp.options[compkey]" value="comp.options[compkey]">
+              <option v-for="op in prop.options" v-bind:value="op">{{op}}</option>
+            </select>
+          </div>
           <div v-else>
             <input @input="test" v-model="comp.options[compkey]" />
           </div>
         </div>
-        <div class="prop" v-else>
+        <div class="prop objectprop" v-else>
           <label class="objectlabel">{{compkey}}</label>
           <div class="nestedprops" v-for="(subprop, subkey, subindex) in $store.state.components[comp.name].editableParameters[compkey].props">
             <label>{{subkey}} ({{subprop.type}})</label>
@@ -70,6 +76,7 @@
         </div>
       </div>
     </div>
+    <div @click="undo">Undo</div>
   </div>
 
 </template>
@@ -77,7 +84,7 @@
 <style lang="scss" scoped>
 
   @import '../../assets/theme.scss';
-  input {
+  input, select {
     display: block;
     margin: 2px 0 11px 0;
     background-color: #013043;
@@ -117,9 +124,11 @@
   .banner-state {
     color: #2383FF;
     font-size: 18px;
+    padding: 10px;
   }
   .banner-state div {
     margin: 0 0 0 10px;
+    padding: 10px;
   }
   .state-title {
     display: block;
@@ -128,9 +137,21 @@
   .component {
     font-size: 12px;
     color: #FF0;
+
+  }
+  .component:nth-child(odd) {
+    background-color: #001122;
   }
   .prop {
     color: #0F0;
+  }
+  .objectprop {
+    background-color: #034710;
+    display: inline-block;
+  }
+  .objectprop input {
+    background-color: #014330;
+    color: #AF0;
   }
   .bannerprops::-webkit-scrollbar { width: 10px !important; opacity: 0.5 !important; }
   .bannerprops {

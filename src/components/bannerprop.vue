@@ -1,6 +1,5 @@
 <script>
 
-  import _ from 'lodash-es'
   import { mapState } from 'vuex'
 
   export default {
