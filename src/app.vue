@@ -30,6 +30,7 @@
       <transition name="page" mode="out-in">
          <router-view></router-view>
       </transition>
+      <div v-if="!loadStatus">Loading</div>
       <div class="push"></div>
     </div>
     <footer id="footer"><span>© Liquidus Marketing 2019</span></footer>
@@ -98,11 +99,11 @@
     font-size: 14px;
   }
   .page-enter-active, .page-leave-active {
-    transition: opacity .6s, transform .8s cubic-bezier(0.685, 0.085, 0.355, 1.000);
+    transition: opacity .4s, transform .4s cubic-bezier(0.685, 0.085, 0.355, 1.000);
   }
   .page-enter, .page-leave-to {
     opacity: 0;
-    transform: translateX(400px) scale(2.5) translateX(700px) translateY(300px);
+    transform: translateX(200px) translateX(300px);
   }
 
 </style>

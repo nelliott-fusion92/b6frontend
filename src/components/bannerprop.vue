@@ -48,8 +48,7 @@
     </div>
     <div v-else-if="options">
       <select :value="content" @input="handleInputSelect">
-        <option value=""></option>
-        <option selected :value="content">{{content}}</option>        
+        <option selected :value="content">{{content}}</option>
         <option v-for="val in options" v-if="val != content" :value="val">{{val}}</option>
       </select>
     </div>
@@ -64,6 +63,7 @@
         @input="handleInputObject"
         :path="`${path}.${subpropkey}`"
         :type="subprop.type"
+        :options="subprop.options"
       />
     </div>
     <div v-else>
@@ -82,7 +82,7 @@
     height: 24px;
     background-color: #013043;
     border: none;
-    border-radius: 2px;
+    border-radius: 4px;
     outline: none;
     padding: 5px;
     color: #0EF;
@@ -93,10 +93,12 @@
     width: 300px;
   }
   input[type='color'] {
-    display:block;
+    display:inline-block;
     width: 30px;
     height: 30px;
     padding: 0;
+    margin:1px 0 0 -1px;
+
     background-color: rgba(0,0,0,0);
     box-shadow: none;
   }
@@ -111,19 +113,28 @@
     color: #0F0 !important;
   }
   .prop {
+    border-left: solid 4px #0FF;
     display:inline-block;
+    margin: 10px 0 !important;
+    padding: 0 10px !important;
     width: 350px;
+    vertical-align: top;
     color: #0F0;
-    vertical-align:top;
+
+  }
+  .prop:hover {
+    border-left: solid 4px #FF0;
   }
   .objectprop {
-    padding: 10px;
-    background-color: #034710;
+    padding: 10px !important;
+    background-color: #004700;
+    margin: 0 !important;
+    border-left: solid 4px #AF0;
     vertical-align:top;
   }
-  .objectprop input {
-    background-color: #014330;
-    color: #AF0;
+  .objectprop input, .objectprop select {
+    background-color: #002301;
+    color: #FF0;
   }
 
 </style>

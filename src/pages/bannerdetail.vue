@@ -44,9 +44,9 @@
   <div v-if="loadStatus">
     <Bannerdetailitem v-if="banner._id" v-bind:banner="banner" />
     <div class="banner-state" v-for="(state, key) in banner.states">
-      <span class="state-title">{{ state.name }}</span>
+      <span class="state-title">S{{key}} {{ state.name }}</span>
       <div class="component" v-for="(comp, compkey) in state.components">
-        <span class="component-title">{{ comp.name }}</span>
+        <span class="component-title">S{{key}}C{{compkey}} {{ comp.name }}</span>
         <div class="component-props">
           <Bannerprop
             v-for="(prop, propkey) in $store.state.components.Component.editableParameters"
@@ -58,24 +58,23 @@
             :path="`states[${key}].components[${compkey}].options.${propkey}`"
             :type="prop.type"
             :options="prop.options"
-
           />
         </div>
-        <Bannerprop
-          v-for="(prop, propkey) in $store.state.components[comp.name].editableParameters"
-          :key="propkey"
-          :value="comp.options[propkey] || $store.state.components[comp.name].defaults[propkey]"
-          :componentName="comp.name"
-          :propkey="propkey"
-          @input="test"
-          :path="`states[${key}].components[${compkey}].options.${propkey}`"
-          :type="prop.type"
-          :options="prop.options"
-
-        />
+        <div>
+          <Bannerprop
+            v-for="(prop, propkey) in $store.state.components[comp.name].editableParameters"
+            :key="propkey"
+            :value="comp.options[propkey] || $store.state.components[comp.name].defaults[propkey]"
+            :componentName="comp.name"
+            :propkey="propkey"
+            @input="test"
+            :path="`states[${key}].components[${compkey}].options.${propkey}`"
+            :type="prop.type"
+            :options="prop.options"
+          />
+        </div>
       </div>
     </div>
-    <div @click="undo">Undo</div>
   </div>
 
 </template>
@@ -90,12 +89,13 @@
     font-size: 16px;
   }
   .component-props {
-    border: solid 1px #FF0;
+
   }
   .banner-state {
     color: #0FF;
     font-size: 18px;
     padding: 10px;
+    background-color: #050505;
   }
   .banner-state div {
     margin: 0 0 0 10px;
@@ -109,10 +109,12 @@
     font-size: 12px;
     color: #FF0;
     background-color: #000111;
-
   }
   .component:nth-child(odd) {
-    background-color: #001122;
+    background-color: #000104;
+  }
+  .banner-state:nth-child(even) {
+    background-color: #101010;
   }
   .bannerprops::-webkit-scrollbar { width: 10px !important; opacity: 0.5 !important; }
   .bannerprops {

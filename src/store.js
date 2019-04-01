@@ -105,6 +105,7 @@ const store = new Vuex.Store({
   mutations: {
 
     undo: function(currentState, data){
+      console.log('undo')
       currentState.currentBanner = history[0].currentBanner
     },
 
@@ -117,22 +118,18 @@ const store = new Vuex.Store({
     },
 
     setCurrentBanner: function(currentState, data) {
-      pushState()
       currentState.currentBanner = data
     },
 
     setBanners: function(currentState, data) {
-      pushState()
       currentState.banners = data
     },
 
     setCurrentPreset: function(currentState, data) {
-      pushState()
       currentState.currentPreset = data
     },
 
     setPresets: function(currentState, data) {
-      pushState()
       currentState.presets = data
     },
 
@@ -145,7 +142,6 @@ const store = new Vuex.Store({
     },
 
     setBannerProperty: function(currentState, payload) {
-      console.log('setbannerprop')
       pushState()
       _.set(currentState.currentBanner, payload.path, payload.val)
       console.log(payload.path + ': ' + this.getters.getBannerProperty(payload.path))
