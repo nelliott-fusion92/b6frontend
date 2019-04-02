@@ -48,7 +48,7 @@
 
   <div v-if="loadStatus">
     <pageheader title="Banner Editor" />
-    ID: <span class="bannerid">{{banner._id}}</span><br /><br />
+    #<span class="bannerid">{{banner._id}}</span><br /><br />
     <label>Banner Name</label>
     <input v-model="banner.name" @input="setBannerProperty" class="biginput" />
     <label>Dimensions</label><br />
@@ -67,13 +67,13 @@
 
   @import '../../assets/theme.scss';
   .statelist {
-    width: 800px;
+    width: 100%;
     display: inline-block;
     margin: 0 0 20px 0;
   }
   .bannerid {
-    color: #F3F;
-    font-weight: 400;
+    color: #0FF;
+    font-size: 16px;
   }
   .banner-state {
     font-size: 16px;
@@ -92,8 +92,9 @@
     padding: 10px;
   }
   .biginput {
-
-    width: 600px;
+    font-size: 16px;
+    height: auto;
+    width: 400px;
   }
   .smallinput {
     font-size: 14px;

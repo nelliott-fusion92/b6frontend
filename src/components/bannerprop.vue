@@ -25,7 +25,7 @@
         return this.$store.getters.getTerm(this.propkey)
       },
       changed: function() {
-        return this.content != this.original;
+        return this.content != this.original || this.content !== this.original;
       },
       isObject: function(){
         return this.type == 'object'
@@ -68,8 +68,8 @@
     </div>
     <div v-else-if="type === 'bool'">
       <select :value="content" @input="handleInputSelect">
-        <option value="false">False</option>
-        <option value="true">True</option>
+        <option value="false">false</option>
+        <option value="true">true</option>
       </select>
     </div>
     <div v-else-if="type === 'object'">
@@ -105,6 +105,8 @@
     width: 350px;
     vertical-align: middle;
     color: #0F0;
+    font-family: 'Open Sans';
+    font-weight: normal;
   }
   .prop:hover {
     border-left: solid 4px #FF0;
@@ -114,16 +116,25 @@
     padding: 10px !important;
 
     background-color: #003600;
+    border-bottom: dotted 1px #0FF;
     display: block;
     width: 100%;
 
   }
-  .objectprop label {
-    color: #0FF !important;
+  .prop label {
+    font-family: 'Open Sans';
+    font-size: 14px;
   }
+
   .objectprop {
     border-left: solid 4px #AF0 !important;
     vertical-align:top;
+  }
+  .objectprop:hover {
+    border-left: solid 4px #F09 !important;
+  }
+  .objectprop label {
+    color: #0FF !important;
   }
   .objectprop input, .objectprop select {
     background-color: #002301;
@@ -132,7 +143,6 @@
   .description {
     font-size: 11px;
     color: #6DF;
-    font-weight: normal;
     -webkit-font-smoothing: auto;
     font-smoothing: auto;
   }
@@ -141,19 +151,23 @@
     color: #FFF;
   }
   .objectpropgroup .type {
-    color: #FFA;
+    color: #FA0;
   }
   .changed {
-    border-left: dotted 4px #0FF !important;
+    border-left: dotted 4px #F90 !important;
   }
   .changed:hover {
     border-left: dotted 4px #FF0 !important;
   }
+  .objectprop.changed:hover {
+    border-left: dotted 4px #F09 !important;
+  }
   .type {
-    font-family: 'Roboto';
-    color: #FF00AE;
-    font-size: 12px;
-
+    font-family: 'Open Sans';
+    color: #FF00FF;
+    font-size: 10px;
+    -webkit-font-smoothing: auto;
+    font-smoothing: auto;
 
 
   }

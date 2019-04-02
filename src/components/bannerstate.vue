@@ -47,7 +47,7 @@
     display: block;
     cursor: pointer;
     font-family: 'Exo', sans-serif;
-    font-weight: 400;
+    font-weight: bold;
     color: #0FF;
     user-select:none;
   }
@@ -60,9 +60,6 @@
   .component {
     font-size: 12px;
     color: #FF0;
-    border-bottom: solid 1px #4A4A4A;
-    
-    //background-color: #051520;
   }
   .component:last-child {
     border-bottom: none;

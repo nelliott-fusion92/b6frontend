@@ -58,6 +58,12 @@ module.exports = {
           }
         }]
       },
+      {
+       test: /\.(png|jpg|gif)$/,
+       use: [
+         'file-loader'
+       ]
+      }
     ]
   },
   plugins: [

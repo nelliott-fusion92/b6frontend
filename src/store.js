@@ -93,9 +93,7 @@ const store = new Vuex.Store({
     },
 
     SET_BANNER_PROPERTY: function({ commit }, payload) {
-      console.log(payload)
       commit('setBannerProperty', payload)
-
     },
 
   },
@@ -156,8 +154,10 @@ const store = new Vuex.Store({
 
     setBannerProperty: function(currentState, payload) {
       pushState()
+      console.log(payload.path)
+      console.log('Was: ' + this.getters.getBannerProperty(payload.path))
       _.set(currentState.currentBanner, payload.path, payload.val)
-      console.log(payload.path + ': ' + this.getters.getBannerProperty(payload.path))
+      console.log('Is now: ' + this.getters.getBannerProperty(payload.path))
 
     },
   },

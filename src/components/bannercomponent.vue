@@ -20,7 +20,6 @@
     },
     methods: {
       setBannerProperty: function(e) {
-        console.log(e)
         this.$store.dispatch('SET_BANNER_PROPERTY', e)
       },
       toggleVisible: function(propSet){
@@ -31,7 +30,9 @@
         if(index < 0){
           return false
         }
-        return true
+        else {
+          return true
+        }
       }
     },
     computed: {
@@ -132,7 +133,7 @@
 
   .component-title {
     display: block;
-    background-color: #2A2A2A;
+    background-color: #212121;
     padding: 10px;
     font-family: 'Exo', sans-serif;
     font-weight: 400;
@@ -140,6 +141,9 @@
     cursor: pointer;
     color: #FFF;
     user-select:none;
+
+    border-bottom: solid 1px #4A4A4A;
+
   }
   .component-title:hover {
     color: #AF0;
