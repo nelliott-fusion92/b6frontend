@@ -41,6 +41,7 @@ const store = new Vuex.Store({
     banners: [],
     presets: [],
     components: [],
+    terms: {},
     ensembles: [],
     currentPreset: {},
     currentBanner: {},
@@ -81,6 +82,11 @@ const store = new Vuex.Store({
       commit('setComponents', data.data)
     },
 
+    GET_TERMS: async function({ commit }) {
+      const data = await axios.get(`${this.state.api_base}v1/terms`)
+      commit('setTerms', data.data)
+    },
+
     GET_ENSEMBLES: async function({ commit }) {
       const data = []
       commit('getEnsembles', data)
@@ -100,6 +106,9 @@ const store = new Vuex.Store({
       const v = _.get(state.currentBanner, path)
       return v
     },
+    getTerm: (state => (term) => {
+      return _.get(state.terms, term, '(no definition found)')
+    })
   },
 
   mutations: {
@@ -135,6 +144,10 @@ const store = new Vuex.Store({
 
     setComponents: function(currentState, data) {
       currentState.components = data
+    },
+
+    setTerms: function(currentState, data) {
+      currentState.terms = data
     },
 
     setEnsembles: function(currentState, data) {

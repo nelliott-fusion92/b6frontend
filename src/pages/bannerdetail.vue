@@ -2,6 +2,8 @@
 
   import Bannerdetailitem from '../components/bannerdetailitem.vue'
   import Bannerdisplay from '../components/bannerdisplay.vue'
+  import Bannercomponent from '../components/bannercomponent.vue'
+  import Bannerstate from '../components/bannerstate.vue'
   import Bannerprop from '../components/bannerprop.vue'
   import pageheader from '../components/pageheader.vue'
 
@@ -12,11 +14,14 @@
     components: {
       Bannerdetailitem,
       Bannerdisplay,
+      Bannercomponent,
+      Bannerstate,
       Bannerprop,
       pageheader,
     },
     beforeMount () {
       this.$store.dispatch('GET_COMPONENTS')
+      this.$store.dispatch('GET_TERMS')
     },
     mounted () {
       this.$store.dispatch('GET_BANNER', this.id)
@@ -27,9 +32,9 @@
       },
     },
     methods: {
-      test: function(e) {
+      setBannerProperty: function(e) {
         console.log(e)
-        this.$store.dispatch('SET_BANNER_PROPERTY', e)
+        //this.$store.dispatch('SET_BANNER_PROPERTY', e)
       },
       undo: function() {
         this.$store.commit('undo')
@@ -42,38 +47,17 @@
 <template>
 
   <div v-if="loadStatus">
-    <Bannerdetailitem v-if="banner._id" v-bind:banner="banner" />
-    <div class="banner-state" v-for="(state, key) in banner.states">
-      <span class="state-title">S{{key}} {{ state.name }}</span>
-      <div class="component" v-for="(comp, compkey) in state.components">
-        <span class="component-title">S{{key}}C{{compkey}} {{ comp.name }}</span>
-        <div class="component-props">
-          <Bannerprop
-            v-for="(prop, propkey) in $store.state.components.Component.editableParameters"
-            :key="propkey"
-            :value="comp.options[propkey] || $store.state.components.Component.defaults[propkey]"
-            :componentName="comp.name"
-            :propkey="propkey"
-            @input="test"
-            :path="`states[${key}].components[${compkey}].options.${propkey}`"
-            :type="prop.type"
-            :options="prop.options"
-          />
-        </div>
-        <div>
-          <Bannerprop
-            v-for="(prop, propkey) in $store.state.components[comp.name].editableParameters"
-            :key="propkey"
-            :value="comp.options[propkey] || $store.state.components[comp.name].defaults[propkey]"
-            :componentName="comp.name"
-            :propkey="propkey"
-            @input="test"
-            :path="`states[${key}].components[${compkey}].options.${propkey}`"
-            :type="prop.type"
-            :options="prop.options"
-          />
-        </div>
-      </div>
+    <pageheader title="Banner Editor" />
+    ID: <span class="bannerid">{{banner._id}}</span><br /><br />
+    <label>Banner Name</label>
+    <input v-model="banner.name" @input="setBannerProperty" class="biginput" />
+    <label>Dimensions</label><br />
+    <input class="smallinput" :value="banner.width" /> <input class="smallinput" :value="banner.height" />
+    <br />
+    <label>Description</label>
+    <textarea :value="banner.description"></textarea>
+    <div class="statelist">
+      <Bannerstate class="banner-state" v-for="(state, key) in banner.states" :statekey="key" :state="state" :key="key" />
     </div>
   </div>
 
@@ -82,24 +66,39 @@
 <style lang="scss" scoped>
 
   @import '../../assets/theme.scss';
-
-  .component-title {
-    display: block;
-    margin: 0 0 10px 0;
-    font-size: 16px;
+  .statelist {
+    width: 800px;
+    display: inline-block;
+    margin: 0 0 20px 0;
   }
-  .component-props {
-
+  .bannerid {
+    color: #F3F;
+    font-weight: 400;
   }
   .banner-state {
-    color: #0FF;
-    font-size: 18px;
-    padding: 10px;
+    font-size: 16px;
+    padding: 15px 10px;
     background-color: #050505;
+    border-bottom: solid 1px #222;
+  }
+  .banner-state:last-child {
+    border-bottom: none;
+  }
+  .banner-state:nth-child(even) {
+    background-color: #101010;
   }
   .banner-state div {
     margin: 0 0 0 10px;
     padding: 10px;
+  }
+  .biginput {
+
+    width: 600px;
+  }
+  .smallinput {
+    font-size: 14px;
+    width: 60px;
+    display: inline-block;
   }
   .state-title {
     display: block;
@@ -116,22 +115,5 @@
   .banner-state:nth-child(even) {
     background-color: #101010;
   }
-  .bannerprops::-webkit-scrollbar { width: 10px !important; opacity: 0.5 !important; }
-  .bannerprops {
-    background-color: #001828 !important;
-    color: #14AEFE;
-    padding: 20px 10px;
-    margin: 10px 0;
-    border: solid 1px #005270;
-    overflow-x: hidden;
-    overflow-y: auto;
-    width: 500px;
-    max-height: 900px;
-    font-family: 'Open Sans', sans-serif;
-    font-weight: normal;
-    box-sizing: content-box;
-    overflow-y: scroll;
-  }
-
 
 </style>
