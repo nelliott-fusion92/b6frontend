@@ -116,7 +116,7 @@
     padding: 10px !important;
 
     background-color: #003600;
-    border-bottom: dotted 1px #0FF;
+
     display: block;
     width: 100%;
 
