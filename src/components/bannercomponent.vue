@@ -141,7 +141,6 @@
     cursor: pointer;
     color: #FFF;
     user-select:none;
-
     border-bottom: solid 1px #4A4A4A;
 
   }

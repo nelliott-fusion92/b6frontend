@@ -7,6 +7,9 @@
   export default {
     components: {
       pageheader
+    },
+    beforeMount: function() {
+      this.$store.commit('changeLoadingStatus', 'COMPLETE')
     }
   }
 

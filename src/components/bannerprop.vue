@@ -64,6 +64,7 @@
       <select :value="content" @input="handleInputSelect">
         <option selected :value="content">{{content}}</option>
         <option v-for="val in options" v-if="val != content" :value="val">{{val}}</option>
+        <option value=""></option>
       </select>
     </div>
     <div v-else-if="type === 'bool'">
