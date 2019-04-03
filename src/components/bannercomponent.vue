@@ -54,9 +54,6 @@
         console.log(x)
         return x
       },
-      coverpage: function() {
-        return this.component.name == 'Coverpage'
-      }
     }
   }
 
@@ -121,7 +118,23 @@
           :quick="isQuick(component.name, propkey)"
         />
       </div>
-      <div v-if="coverpage" class="coverpage"><img :src="component.options.imgUrl" /></div>
+      <div class="preview">
+        <h3>Preview</h3>
+        <div v-if="component.name === 'Coverpage'" class="coverpage"><img :src="component.options.imgUrl" /></div>
+        <div
+
+        v-if="component.name === 'Textfield'"
+        :style="{
+          color: component.options.color,
+          textAlign: component.options.alignment,
+          font: component.options.font,
+          textShadow: component.options.shadow,
+          userSelect: component.options.userSelect
+        }"
+        >
+          {{component.options.text}}
+        </div>
+      </div>
     </div>
   </div>
 
@@ -172,9 +185,5 @@
     border-bottom: dotted 1px #0FF;
     margin: 0 0 10px 0;
   }
-  .coverpage {
-
-  }
-
 
 </style>
