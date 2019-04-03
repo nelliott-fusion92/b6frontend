@@ -48,6 +48,13 @@
       handleInputObject: function(e) {
         this.$emit('input', e);
       },
+      resetValue: function(e){
+        this.content = this.original
+        this.$emit('input', {
+          path: this.path,
+          val: this.content,
+        })
+      }
     },
   }
 
@@ -55,10 +62,11 @@
 
 <template>
   <div class="prop" :class="{ changed: changed, objectpropgroup: isObject }">
-    <label>{{propkey}} <span class="type">{{type}}</span></label>
+    <label>{{propkey}} <span class="type">{{type}}</span> <span class="resetvalue" v-show="changed" @click="resetValue">(reset)</span></label>
     <div class="description">{{term}}</div>
     <div v-if="type === 'color'">
       <input type="color" v-model="content" @input="handleInput" />
+      <input class="colorinput" v-model="content" @input="handleInput" />
     </div>
     <div v-else-if="options">
       <select :value="content" @input="handleInputSelect">
@@ -174,7 +182,18 @@
   }
   .type::before {
     content: ' #';
+  }
+  .colorinput {
+    display: inline;
+    width: 60px;
+    vertical-align: 10px;
+  }
 
+  .resetvalue {
+    font-size: 12px;
+    text-transform: none;
+    cursor: pointer;
+    color: #FA0;
   }
 
 
