@@ -65,7 +65,7 @@
 <template>
 
   <div v-if="loadStatus">
-    <span @click="toggleVisible('showProps')" class="component-title">[ C{{compkey}} ] {{ component.name }}</span>
+    <span @click="toggleVisible('showProps')" class="component-title">{{ component.name }}</span>
     <div class="component-body" v-show="showProps">
       <div class="sectionlabel" title="Properties that all components share">
         Component-level properties
@@ -73,7 +73,7 @@
         <span class="togglebutton" @click="toggleVisible('showComponentProps')"v-show="!showComponentProps">(show)</span>
       </div>
 
-      <div v-show="showComponentProps" class="component-props propgroup">
+      <div v-if="showComponentProps" class="component-props propgroup">
         <Bannerprop
           v-for="(prop, propkey) in $store.state.components.Component.editableParameters"
           :key="propkey"
@@ -135,9 +135,9 @@
     display: block;
     background-color: #212121;
     padding: 10px;
-    font-family: 'Exo', sans-serif;
-    font-weight: 400;
-    font-size: 14px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: bold;
+    font-size: 16px;
     cursor: pointer;
     color: #FFF;
     user-select:none;
@@ -146,7 +146,7 @@
 
   }
   .component-title:hover {
-    color: #AF0;
+    color: #FF0;
   }
   .component-props {
 

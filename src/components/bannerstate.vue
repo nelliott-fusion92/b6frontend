@@ -27,7 +27,7 @@
 <template>
 
   <div>
-    <span @click="toggleComponents" class="state-title">[ S{{statekey}} ] {{ state.name }}</span>
+    <span @click="toggleComponents" class="state-title">{{ state.name }}</span>
     <div v-show="showComponents" class="components">
       <Bannercomponent class="component" v-for="(comp, compkey) in state.components" :component="comp" :statekey="statekey" :compkey="compkey" :key="compkey" />
     </div>
@@ -46,13 +46,14 @@
   .state-title {
     display: block;
     cursor: pointer;
-    font-family: 'Exo', sans-serif;
+    font-family: 'Roboto', sans-serif;
     font-weight: bold;
     color: #0FF;
+    font-size: 18px;
     user-select:none;
   }
   .state-title:hover {
-    color: #AF0;
+    color: #6F0;
   }
   .components {
     margin: 10px 0 0 0;

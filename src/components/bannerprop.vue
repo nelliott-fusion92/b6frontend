@@ -25,7 +25,7 @@
         return this.$store.getters.getTerm(this.propkey)
       },
       changed: function() {
-        return this.content != this.original || this.content !== this.original;
+        return this.content.toString() != this.original.toString();
       },
       isObject: function(){
         return this.type == 'object'
