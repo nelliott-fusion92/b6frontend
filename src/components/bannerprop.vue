@@ -12,7 +12,6 @@
       'key',
       'propkey',
       'options',
-      'quick',
     ],
     data () {
       return {
@@ -65,7 +64,7 @@
     <label>{{propkey}} <span class="type">{{type}}</span> <span class="resetvalue" v-show="changed" @click="resetValue">(reset)</span></label>
     <div class="description">{{term}}</div>
     <div v-if="type === 'color'">
-      <input type="color" v-model="content" @input="handleInput" />
+      <div class="colorbox" :style="{backgroundColor: content}"></div>
       <input class="colorinput" v-model="content" @input="handleInput" />
     </div>
     <div v-else-if="options">
@@ -185,7 +184,7 @@
   }
   .colorinput {
     display: inline;
-    width: 60px;
+    width: 130px;
     vertical-align: 10px;
   }
 
@@ -194,6 +193,13 @@
     text-transform: none;
     cursor: pointer;
     color: #FA0;
+  }
+
+  .colorbox {
+    display: inline-block;
+    height: 30px;
+    width: 30px;
+    border: solid 1px #666;
   }
 
 

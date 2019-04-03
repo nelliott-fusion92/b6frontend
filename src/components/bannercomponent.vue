@@ -36,24 +36,25 @@
       }
     },
     computed: {
+      editableParameters: function() {
+        return this.$store.state.components[this.component.name].editableParameters
+      },
       quick: function(){
         let x = _.filter(this.$store.state.components[this.component.name].editableParameters, (op, key) => {
-          if(this.$store.state.components[this.component.name].quickSettings.indexOf(key) >= 0)
-          return op
-        })
-        console.log(x)
-        return x
-      },
-      advanced: function(){
-
-        let x = _.filter(this.$store.state.components[this.component.name].editableParameters, (op, key) => {
-          if(this.$store.state.components[this.component.name].quickSettings.indexOf(key) < 0)
-          return op
+          if(this.$store.state.components[this.component.name].quickSettings.indexOf(key) >= 0){
+            op.name = key
+            return op
+          }
         })
 
-        console.log(x)
-        return x
+        let obj = {}
+        _.each(x, (xx) => {
+          obj[xx.name] = { type: xx.type }
+        })
+        console.log(obj)
+        return obj
       },
+
     }
   }
 
@@ -70,7 +71,7 @@
         <span class="togglebutton" @click="toggleVisible('showComponentProps')"v-show="!showComponentProps">(show)</span>
       </div>
 
-      <div v-if="showComponentProps" class="component-props propgroup">
+      <div v-show="showComponentProps" class="component-props propgroup">
         <Bannerprop
           v-for="(prop, propkey) in $store.state.components.Component.editableParameters"
           :key="propkey"
@@ -91,7 +92,7 @@
       </div>
       <div v-show="showAdvanced" class="propgroup">
         <Bannerprop
-          v-for="(prop, propkey) in $store.state.components[component.name].editableParameters"
+          v-for="(prop, propkey) in editableParameters"
           :key="propkey"
           :value="component.options[propkey] || $store.state.components[component.name].defaults[propkey]"
           :componentName="component.name"
@@ -100,13 +101,11 @@
           :path="`states[${statekey}].components[${compkey}].options.${propkey}`"
           :type="prop.type"
           :options="prop.options"
-          :quick="isQuick(component.name, propkey)"
         />
       </div>
       <div v-show="!showAdvanced" class="propgroup">
         <Bannerprop
-          v-for="(prop, propkey) in $store.state.components[component.name].editableParameters"
-          v-if="isQuick(component.name, propkey)"
+          v-for="(prop, propkey) in quick"
           :key="propkey"
           :value="component.options[propkey] || $store.state.components[component.name].defaults[propkey]"
           :componentName="component.name"
@@ -115,7 +114,6 @@
           :path="`states[${statekey}].components[${compkey}].options.${propkey}`"
           :type="prop.type"
           :options="prop.options"
-          :quick="isQuick(component.name, propkey)"
         />
       </div>
       <div class="preview">
