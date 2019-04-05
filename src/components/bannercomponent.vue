@@ -51,7 +51,6 @@
         _.each(x, (xx) => {
           obj[xx.name] = { type: xx.type }
         })
-        console.log(obj)
         return obj
       },
 
