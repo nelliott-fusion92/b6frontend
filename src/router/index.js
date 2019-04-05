@@ -14,7 +14,7 @@ import Errorpage from '../pages/errorpage.vue'
 
 Vue.use(VueRouter)
 
-const api_base = 'http://localhost:2047/api/'
+const api_base = 'https://bl6l.liquidus.net/api/'
 
 const r = new VueRouter({
   routes: [
@@ -63,11 +63,6 @@ const r = new VueRouter({
       path: '/ensembles',
       name: 'ensembles',
       component: Ensembles,
-    },
-    {
-      path: '/',
-      name: 'presets',
-      component: Presetlist,
     },
     {
       path: '*',

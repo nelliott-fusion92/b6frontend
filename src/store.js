@@ -36,7 +36,7 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
-    api_base: 'http://localhost:2047/api/',
+    api_base: 'https://bl6l.liquidus.net/api/',
     debug: true,
     banners: [],
     presets: [],
@@ -78,13 +78,17 @@ const store = new Vuex.Store({
     },
 
     GET_COMPONENTS: async function({ commit }) {
+      commit('changeLoadingStatus', 'LOADING')
       const data = await axios.get(`${this.state.api_base}v1/components`)
       commit('setComponents', data.data)
+      commit('changeLoadingStatus', 'COMPLETE')
     },
 
     GET_TERMS: async function({ commit }) {
+      commit('changeLoadingStatus', 'LOADING')
       const data = await axios.get(`${this.state.api_base}v1/terms`)
       commit('setTerms', data.data)
+      commit('changeLoadingStatus', 'COMPLETE')
     },
 
     GET_ENSEMBLES: async function({ commit }) {
