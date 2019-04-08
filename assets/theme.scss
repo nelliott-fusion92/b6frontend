@@ -6,6 +6,10 @@
 $col: #0BE;
 $errorCol: #F00;
 $footerHeight: 50px;
+$lightGreen: #A2EF07;
+$darkGrey: #050505;
+$lightGrey: #4a4a4a;
+$pink: #ff00ff;
 
 html {
   height: 100%;
@@ -92,6 +96,21 @@ label {
   font-family: 'Exo';
   font-size: 12px;
   text-transform: uppercase;
+}
+
+.greenbtn {
+  padding: 3px 5px;
+  border: solid 1px $lightGreen;
+  color: $lightGreen;
+  text-transform: uppercase;
+  display: inline-block;
+  user-select: none;
+  cursor: pointer;
+  margin: 0 3px 0 0;
+}
+.greenbtn:hover {
+  color: #FF0;
+  border-color: #FF0;
 }
 
 .fade-enter-active, .fade-leave-active {

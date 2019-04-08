@@ -65,6 +65,11 @@ const r = new VueRouter({
       component: Ensembles,
     },
     {
+      path: '/',
+      name: 'Home',
+      component: Presetlist,
+    },
+    {
       path: '*',
       name: 'error',
       component: Errorpage,

@@ -9,7 +9,6 @@
       'componentName',
       'type',
       'path',
-      'key',
       'propkey',
       'options',
     ],
@@ -24,7 +23,11 @@
         return this.$store.getters.getTerm(this.propkey)
       },
       changed: function() {
-        return this.content.toString() != this.original.toString();
+        if(this.content && this.original)
+          return this.content.toString() != this.original.toString();
+
+        return false
+
       },
       isObject: function(){
         return this.type == 'object'

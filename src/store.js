@@ -36,6 +36,7 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
+    //api_base: 'https://bl6l.liquidus.net/api/',
     api_base: 'https://bl6l.liquidus.net/api/',
     debug: true,
     banners: [],
@@ -45,6 +46,7 @@ const store = new Vuex.Store({
     ensembles: [],
     currentPreset: {},
     currentBanner: {},
+    bannerSavingStatus: '',
     loadStatus: 'LOADING',
   },
   actions: {
@@ -100,6 +102,40 @@ const store = new Vuex.Store({
       commit('setBannerProperty', payload)
     },
 
+    SAVE_BANNER_AS_NEW_PRESET: async function({ commit }) {
+      commit('changeBannerSavingStatus', 'SAVING AS NEW PRESET')
+      await axios.post(`${this.state.api_base}v1/presets`, {
+        data: this.state.currentBanner,
+        headers: { 'content-type': 'application/json' },
+      })
+      commit('changeBannerSavingStatus', 'COMPLETE')
+      return true
+
+    },
+
+    SAVE_BANNER_AS_NEW_BANNER: async function({ commit }) {
+      commit('changeBannerSavingStatus', 'SAVING AS NEW BANNER')
+      await axios.post(`${this.state.api_base}v1/banners`, {
+        data: this.state.currentBanner,
+        headers: { 'content-type': 'application/json' },
+      })
+      commit('changeBannerSavingStatus', 'COMPLETE')
+      return true
+
+    },
+
+    UPDATE_BANNER: async function({ commit }) {
+      commit('changeBannerSavingStatus', 'UPDATING EXISTING BANNER')
+      await axios.post(`${this.state.api_base}v1/banners/${this.state.currentBanner._id}`, {
+        data: this.state.currentBanner,
+        headers: { 'content-type': 'application/json' },
+      })
+      commit('changeBannerSavingStatus', 'COMPLETE')
+
+      return true
+
+    },
+
   },
 
   getters: {
@@ -126,6 +162,10 @@ const store = new Vuex.Store({
 
     changeLoadingStatus: function(currentState, data) {
       currentState.loadStatus = data;
+    },
+
+    changeBannerSavingStatus: function(currentState, data) {
+      currentState.bannerSavingStatus = data;
     },
 
     setCurrentBanner: function(currentState, data) {

@@ -79,6 +79,7 @@
     border-top: dotted 1px #DFF;
     grid-row-start: 3;
     padding: $footerHeight / 2 + 7 0 0 0;
+    margin: 10px 0 0 0;
   }
 
   #nav {

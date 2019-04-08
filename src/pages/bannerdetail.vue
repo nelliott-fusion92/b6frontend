@@ -27,18 +27,30 @@
       this.$store.dispatch('GET_BANNER', this.id)
     },
     computed: {
+      bannerSavingStatus: function() {
+        return this.$store.state.bannerSavingStatus
+      },
+      isSavingComplete: function() {
+        return this.$store.state.bannerSavingStatus != 'COMPLETE'
+      },
       banner: function() {
         return this.$store.state.currentBanner
       },
     },
     methods: {
-      setBannerProperty: function(e) {
-        console.log(e)
-        //this.$store.dispatch('SET_BANNER_PROPERTY', e)
-      },
       undo: function() {
         this.$store.commit('undo')
       },
+      saveBanner: function(){
+        console.log(this.$store.state.currentBanner)
+        this.$store.dispatch('SAVE_BANNER_AS_NEW_BANNER')
+      },
+      saveAsPreset: function() {
+        this.$store.dispatch('SAVE_BANNER_AS_NEW_PRESET')
+      },
+      updateBanner: function() {
+        this.$store.dispatch('UPDATE_BANNER')
+      }
     },
   }
 
@@ -47,13 +59,13 @@
 <template>
 
   <div v-if="loadStatus">
-    <pageheader :title="banner.name" />
+    <pageheader v-if="banner" :title="banner.name" />
     <div class="bannerid">#{{banner._id}}</div>
     <div class="panel">
       <h3>Banner Details</h3>
       <div class="panelbody">
         <label>Banner Name</label>
-        <input v-model="banner.name" @input="setBannerProperty" />
+        <input v-model="banner.name" />
         <label>Dimensions</label><br />
         <input class="smallinput" :value="banner.width" /> <input class="smallinput" :value="banner.height" />
         <br />
@@ -75,6 +87,10 @@
         </div>
       </div>
     </div>
+    <div @click="updateBanner" class="greenbtn">Save</div>
+    <div @click="saveAsPreset" class="greenbtn">Save as preset</div>
+    <div @click="saveBanner" class="greenbtn">Save as new</div>
+    <span :class="{ animateflicker : isSavingComplete }" class="loading-display">{{bannerSavingStatus}}</span>
   </div>
 
 </template>
@@ -168,6 +184,38 @@
   }
   .banner-state:nth-child(even) {
     background-color: #101010;
+  }
+
+  @keyframes flickerAnimation {
+    0%   { opacity:1; }
+    50%  { opacity:0; }
+    100% { opacity:1; }
+  }
+  @-o-keyframes flickerAnimation{
+    0%   { opacity:1; }
+    50%  { opacity:0; }
+    100% { opacity:1; }
+  }
+  @-moz-keyframes flickerAnimation{
+    0%   { opacity:1; }
+    50%  { opacity:0; }
+    100% { opacity:1; }
+  }
+  @-webkit-keyframes flickerAnimation{
+    0%   { opacity:1; }
+    50%  { opacity:0; }
+    100% { opacity:1; }
+  }
+  .animateflicker {
+     -webkit-animation: flickerAnimation .5s infinite;
+     -moz-animation: flickerAnimation .5s infinite;
+     -o-animation: flickerAnimation .5s infinite;
+      animation: flickerAnimation .5s infinite;
+      color: #FF0 !important;
+  }
+  .loading-display {
+    color: #0FF;
+    margin: 0 0 0 5px;
   }
 
 </style>
