@@ -3,6 +3,7 @@
   import axios from 'axios'
   import bannerblock from '../components/bannerblock.vue'
   import pageheader from '../components/pageheader.vue'
+  import confirmation from '../components/confirmation.vue'
 
   export default {
     props: [
@@ -17,6 +18,7 @@
     components: {
       bannerblock,
       pageheader,
+      confirmation,
     },
     mounted () {
       this.$store.dispatch('GET_BANNERS')
@@ -37,7 +39,7 @@
   <div v-if="loadStatus">
 
     <pageheader v-bind:title="$route.name" />
-    <bannerblock class="bannerblock" v-for="banner in banners" :banner="banner" :bannerURL="'/banners/' + banner._id" :key="banner._id" />
+    <bannerblock class="bannerblock" v-for="banner in banners" :banner="banner" :isPreset="false" :bannerURL="'/banners/' + banner._id" :key="banner._id" />
 
   </div>
 

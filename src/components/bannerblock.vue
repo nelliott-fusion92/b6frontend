@@ -6,7 +6,18 @@
     props: [
       'banner',
       'bannerURL',
+      'isPreset'
     ],
+    methods: {
+      deleteBanner: function(e) {
+        e.preventDefault()
+        this.$store.dispatch('DELETE_BANNER', this.banner._id)
+      },
+      getPreview: function() {
+        e.preventDefault()     
+        window.open(`${this.$store.state.b6_base}banner/${this.banner._id}`)
+      }
+    },
     computed: {
       expandable: function(){
         return this.banner.initWidth != this.banner.width || this.banner.initHeight != this.banner.height
@@ -54,10 +65,12 @@
 
       <div>
         <h4 class="name">{{ this.banner.name }}</h4>
-        <div class="banner-id">{{ this.banner._id }}</div>
+        <div class="banner-id">#{{ this.banner._id }}</div>
         <div class="dimensions">{{ this.banner.width }} x {{ this.banner.height }}<span v-if="expandable"> EXP</span></div>
         <div class="description">{{ this.banner.description }}</div>
+        <div @click="getPreview" class="ext">Preview</div>
         <div class="imagesamples" v-html="this.imagePreviews"></div>
+        <div v-if="!isPreset" title="Delete banner" class="delete" @click="deleteBanner"><i class="fas fa-trash-alt"></i></div>
       </div>
 
   </router-link>
@@ -94,39 +107,49 @@
     display: inline-block;
   }
   .name {
-    font-size: 16px;
-    overflow:hidden;
-    font-family: 'Exo';
+    font-size: 18px;
+    font-family: 'Roboto';
     color: $lightGreen;
     font-weight: bold;
-    white-space: nowrap;
     text-overflow: ellipsis;
 
   }
   .banner-id {
-    font-size: 10px;
+    font-size: 11px;
     font-family: 'IBM Plex Mono', serif;
-    -webkit-font-smoothing: auto;
-    font-smoothing: auto;
     color: #0FF;
     margin: 0 0 5px 0;
   }
   .dimensions {
-    
     -webkit-font-smoothing: auto;
     font-smoothing: auto;
-    padding: 2px 4px;
-    color: $lightGreen;
+    padding: 2px;
+    background-color: #0FF;
+    color: #000;
     display: inline-block;
-    font-size: 10px;
+    font-size: 11px;
+    font-weight: bold;
+    font-family: 'Gotham';
     position: absolute;
     bottom: 0;
     right: 0;
+  }
+  .ext {
+    color: #FF0;
+    font-size: 11px;
   }
   .imagesamples {
     position: absolute;
     bottom: -4px;
     left: -4px;
+  }
+  .delete {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+  }
+  .delete:hover {
+    color: #0FF;
   }
 
 </style>

@@ -33,6 +33,7 @@
     "@salesforce-ux/design-system": "^2.8.3",
     "axios": "^0.18.0",
     "dotenv": "^7.0.0",
+    "dotenv-webpack": "^1.7.0",
     "lodash-es": "^4.17.11",
     "vue": "^2.6.9",
     "vue-router": "^3.0.2",

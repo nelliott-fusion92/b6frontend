@@ -19,9 +19,7 @@
         <ul>
           <li><router-link :to="{ name: 'presets' }">Presets</router-link></li>
           <li><router-link :to="{ name: 'banners' }">Generated Banners</router-link></li>
-          <li><router-link :to="{ name: 'bitcoin' }">Bitcoin</router-link></li>
           <li><router-link :to="{ name: 'components' }">Components</router-link></li>
-          <li><router-link :to="{ name: 'documentation' }">Documentation</router-link></li>
           <li><router-link :to="{ name: 'ensembles' }">Ensembles</router-link></li>
         </ul>
       </div>

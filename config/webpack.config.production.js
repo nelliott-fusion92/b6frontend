@@ -1,6 +1,7 @@
 'use strict'
 
 const path = require('path')
+const Dotenv = require('dotenv-webpack')
 const { VueLoaderPlugin } = require('vue-loader')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
@@ -58,6 +59,7 @@ module.exports = {
     ]
   },
   plugins: [
+    new Dotenv(),
     new VueLoaderPlugin(),
     new HtmlWebpackPlugin({
       filename: 'index.html',

@@ -2,6 +2,19 @@
 @import url('https://fonts.googleapis.com/css?family=Exo:100,200,300,400,700,800');
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,600');
 @import url('https://fonts.googleapis.com/css?family=IBM+Plex+Mono');
+@font-face {
+  font-family: 'Gotham';
+  src: url('https://font.liquidus.net/Gotham/gotham-book-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Gotham_Bold';
+  src: url('https://font.liquidus.net/Gotham/gotham-bold-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
 
 $col: #0BE;
 $errorCol: #F00;
@@ -120,4 +133,8 @@ label {
   opacity: 0;
   height: 0;
   transform: translate(0, -100%);
+}
+
+i:hover {
+  color: $lightGreen;
 }

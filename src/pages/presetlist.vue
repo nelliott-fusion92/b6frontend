@@ -41,7 +41,7 @@
   <div v-if="loadStatus">
 
     <pageheader v-bind:title="$route.name" />
-    <bannerblock class="bannerblock" v-for="banner in presets" :banner="banner" :bannerURL="'/presets/' + banner._id" :key="banner._id" />
+    <bannerblock class="bannerblock" v-for="banner in presets" :banner="banner" :isPreset="true" :bannerURL="'/presets/' + banner._id" :key="banner._id" />
 
   </div>
 

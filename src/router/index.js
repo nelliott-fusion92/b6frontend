@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import dotenv from 'dotenv/config'
 
+import Home from '../pages/home.vue'
 import Bitcoin from '../pages/bitcoin.vue'
 import Bannerlist from '../pages/bannerlist.vue'
 import Bannerdetail from '../pages/bannerdetail.vue'
@@ -14,7 +15,7 @@ import Errorpage from '../pages/errorpage.vue'
 
 Vue.use(VueRouter)
 
-const api_base = 'https://bl6l.liquidus.net/api/'
+const api_base = process.env.BANNERLINK6_API_URL
 
 const r = new VueRouter({
   routes: [
@@ -67,7 +68,7 @@ const r = new VueRouter({
     {
       path: '/',
       name: 'Home',
-      component: Presetlist,
+      component: Home,
     },
     {
       path: '*',
