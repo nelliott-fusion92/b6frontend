@@ -135,7 +135,13 @@
     right: 0;
   }
   .ext {
+    display: inline-block;
     color: #FF0;
+    font-size: 11px;
+  }
+  .ext:hover {
+    color: #FF0;
+    text-decoration: underline;
     font-size: 11px;
   }
   .imagesamples {

@@ -50,6 +50,9 @@
       },
       updateBanner: function() {
         this.$store.dispatch('UPDATE_BANNER')
+      },
+      previewBanner: function() {
+        window.open(`${this.$store.state.b6_base}banner/${this.banner._id}`)
       }
     },
   }
@@ -61,6 +64,7 @@
   <div v-if="loadStatus">
     <pageheader v-if="banner" :title="banner.name" />
     <div class="bannerid">#{{banner._id}}</div>
+    <div class="greenbtn" @click="previewBanner">Preview</div><br /><br />
     <div class="panel">
       <h3>Banner Details</h3>
       <div class="panelbody">
@@ -98,6 +102,7 @@
 <style lang="scss" scoped>
 
   @import '../../assets/theme.scss';
+
   .panel {
     display: inline-block;
     width: 300px;

@@ -120,10 +120,11 @@ const store = new Vuex.Store({
 
     SAVE_BANNER_AS_NEW_BANNER: async function({ commit }) {
       commit('changeBannerSavingStatus', 'SAVING AS NEW BANNER')
-      await axios.post(`${this.state.api_base}v1/banners`, {
+      let newBanner = await axios.post(`${this.state.api_base}v1/banners`, {
         data: this.state.currentBanner,
         headers: { 'content-type': 'application/json' },
       })
+      commit('setCurrentBanner', newBanner.data)
       commit('changeBannerSavingStatus', 'COMPLETE')
       return true
 
@@ -131,10 +132,12 @@ const store = new Vuex.Store({
 
     SAVE_PRESET_AS_NEW_BANNER: async function({ commit }) {
       commit('changeBannerSavingStatus', 'SAVING PRESET AS NEW BANNER')
-      await axios.post(`${this.state.api_base}v1/banners`, {
+      let newBanner = await axios.post(`${this.state.api_base}v1/banners`, {
         data: this.state.currentPreset,
         headers: { 'content-type': 'application/json' },
       })
+
+      commit('setCurrentBanner', newBanner.data)
       commit('changeBannerSavingStatus', 'COMPLETE')
       return true
 
@@ -142,10 +145,11 @@ const store = new Vuex.Store({
 
     UPDATE_BANNER: async function({ commit }) {
       commit('changeBannerSavingStatus', 'UPDATING EXISTING BANNER')
-      await axios.post(`${this.state.api_base}v1/banners/${this.state.currentBanner._id}`, {
+      let newBanner = await axios.post(`${this.state.api_base}v1/banners/${this.state.currentBanner._id}`, {
         data: this.state.currentBanner,
         headers: { 'content-type': 'application/json' },
       })
+      commit('setCurrentBanner', newBanner.data)
       commit('changeBannerSavingStatus', 'COMPLETE')
 
       return true
