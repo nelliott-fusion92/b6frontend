@@ -13,8 +13,8 @@
         e.preventDefault()
         this.$store.dispatch('DELETE_BANNER', this.banner._id)
       },
-      getPreview: function() {
-        e.preventDefault()     
+      getPreview: function(e) {
+        e.preventDefault()
         window.open(`${this.$store.state.b6_base}banner/${this.banner._id}`)
       }
     },
