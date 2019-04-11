@@ -68,7 +68,7 @@
         <div class="banner-id">#{{ this.banner._id }}</div>
         <div class="dimensions">{{ this.banner.width }} x {{ this.banner.height }}<span v-if="expandable"> EXP</span></div>
         <div class="description">{{ this.banner.description }}</div>
-        <div @click="getPreview" class="ext">Preview</div>
+        <div v-if="!isPreset" @click="getPreview" class="ext">Preview</div>
         <div class="imagesamples" v-html="this.imagePreviews"></div>
         <div v-if="!isPreset" title="Delete banner" class="delete" @click="deleteBanner"><i class="fas fa-trash-alt"></i></div>
       </div>
