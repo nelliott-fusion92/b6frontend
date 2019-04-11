@@ -65,6 +65,7 @@
 
       <div>
         <h4 class="name">{{ this.banner.name }}</h4>
+        <div class="created">Created {{ this.createdDate(this.banner._id) }}</div>
         <div class="banner-id">#{{ this.banner._id }}</div>
         <div class="dimensions">{{ this.banner.width }} x {{ this.banner.height }}<span v-if="expandable"> EXP</span></div>
         <div class="description">{{ this.banner.description }}</div>
@@ -101,43 +102,54 @@
     text-decoration:none;
     background-color: #002333;
   }
+  .bannerblock:hover .name {
+    color: $lightGreen;
+  }
+  .bannerblock:hover .created {
+    color: #0FF;
+  }
   .bannerblock img {
     width: 40px;
     height: 40px;
     display: inline-block;
   }
   .name {
-    font-size: 18px;
-    font-family: 'Roboto';
-    color: $lightGreen;
+    font-size: 16px;
+    font-family: 'Exo';
+    color: #0AA;
     font-weight: bold;
     text-overflow: ellipsis;
 
+  }
+  .description {
+    font-size: 11px;
+    line-height: 12px;
+    margin: 4px 0 0 0;
+    max-height: 24px;
+    overflow-y: hidden;
   }
   .banner-id {
     font-size: 11px;
     font-family: 'IBM Plex Mono', serif;
     color: #0FF;
     margin: 0 0 5px 0;
+    display: none;
   }
   .dimensions {
     -webkit-font-smoothing: auto;
     font-smoothing: auto;
-    padding: 2px;
-    background-color: #0FF;
-    color: #000;
+    color: #FF0;
     display: inline-block;
-    font-size: 11px;
+    font-size: 10px;
     font-weight: bold;
     font-family: 'Gotham';
-    position: absolute;
-    bottom: 0;
-    right: 0;
+
   }
   .ext {
     display: inline-block;
-    color: #FF0;
+    color: #0FF;
     font-size: 11px;
+    margin: 2px 0 0 0;
   }
   .ext:hover {
     color: #FF0;
@@ -145,17 +157,29 @@
     font-size: 11px;
   }
   .imagesamples {
-    position: absolute;
-    bottom: -4px;
-    left: -4px;
+    margin: 5px 0 0 0;
   }
   .delete {
     position: absolute;
     right: 5px;
-    top: 5px;
+    bottom: 2px;
+    font-size: 11px;
+    z-index: 11;
   }
   .delete:hover {
     color: #0FF;
+  }
+  .created {
+    font-size: 10px;
+    font-family: 'Gotham';
+    background-color: #023;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 2px 4px;
+    color: #0AA;
+    z-index: 10;
   }
 
 </style>
