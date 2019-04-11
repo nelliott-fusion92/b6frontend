@@ -42,6 +42,7 @@ const store = new Vuex.Store({
     banners: [],
     presets: [],
     components: [],
+    customTypes: {},
     terms: {},
     ensembles: [],
     currentPreset: {},
@@ -88,6 +89,13 @@ const store = new Vuex.Store({
       commit('changeLoadingStatus', 'LOADING')
       const data = await axios.get(`${this.state.api_base}v1/components`)
       commit('setComponents', data.data)
+      commit('changeLoadingStatus', 'COMPLETE')
+    },
+
+    GET_CUSTOMTYPES: async function({ commit }) {
+      commit('changeLoadingStatus', 'LOADING')
+      const data = await axios.get(`${this.state.api_base}v1/customtypes`)
+      commit('setCustomTypes', data.data)
       commit('changeLoadingStatus', 'COMPLETE')
     },
 
@@ -208,6 +216,10 @@ const store = new Vuex.Store({
       currentState.components = data
     },
 
+    setCustomTypes: function(currentState, data) {
+      currentState.customTypes = data
+    },
+
     setTerms: function(currentState, data) {
       currentState.terms = data
     },
@@ -222,7 +234,6 @@ const store = new Vuex.Store({
       console.log('Was: ' + this.getters.getBannerProperty(payload.path))
       _.set(currentState.currentBanner, payload.path, payload.val)
       console.log('Is now: ' + this.getters.getBannerProperty(payload.path))
-
     },
   },
 })

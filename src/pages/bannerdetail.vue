@@ -21,6 +21,7 @@
     },
     beforeMount () {
       this.$store.dispatch('GET_COMPONENTS')
+      this.$store.dispatch('GET_CUSTOMTYPES')
       this.$store.dispatch('GET_TERMS')
     },
     mounted () {
