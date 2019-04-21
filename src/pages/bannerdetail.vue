@@ -57,7 +57,7 @@
         window.open(`${this.$store.state.b6_base}banner/${this.banner._id}`)
       },
       setBannerProperty: function(e) {
-        this.$store.dispatch('SET_BANNER_PROPERTY', e)
+        this.$store.dispatch('SET_BANNER_PROPERTY', {path: e.srcElement.attributes.path.value, val: e.srcElement.value})
       },
     },
   }
@@ -73,18 +73,23 @@
     <div class="panel">
       <h3>Banner Details</h3>
       <div class="panelbody">
-        <input
+        <div
           v-if="banner && components"
           v-for="(prop, propkey) in components.Banner.editableParameters"
-          :key="propkey"
-          :value="banner[propkey] || components.Banner.defaults[propkey]"
-          :componentName="components.Banner.name"
-          :propkey="propkey"
-          @input="setBannerProperty"
-          :path="`${propkey}`"
-          :type="prop.type"
-          :options="prop.options"
-        />
+        >
+          <label>{{propkey}}</label>
+          <input
+            v-if="banner && components"
+            :key="propkey"
+            :value="banner[propkey]"
+            :componentName="components.Banner.name"
+            :propkey="propkey"
+            @input="setBannerProperty"
+            :path="`${propkey}`"
+            :type="prop.type"
+            :options="prop.options"
+          />
+        </div>
       </div>
     </div>
     <div class="panel">
