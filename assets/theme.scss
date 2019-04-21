@@ -142,3 +142,41 @@ label {
 i:hover {
   color: $lightGreen;
 }
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+  background-color: #666;
+  -webkit-border-radius: 100px;
+}
+
+
+::-webkit-scrollbar:hover {
+  background-color: rgba(0, 0, 0, 0.09);
+}
+
+::-webkit-scrollbar-track {
+  background: rgb(20, 24, 35);
+}
+
+::-webkit-scrollbar-thumb:vertical {
+  background: #0AA;
+  -webkit-border-radius: 100px;
+}
+
+::-webkit-scrollbar-thumb:vertical:active {
+  background: rgba(0,0,0,1);
+  /* Some darker color when you click it */
+  -webkit-border-radius: 100px;
+}
+
+::-webkit-scrollbar-thumb:horizontal {
+  background: #666;
+  -webkit-border-radius: 100px;
+}
+
+::-webkit-scrollbar-thumb:horizontal:active {
+  background: rgba(0,0,0,1);
+  /* Some darker color when you click it */
+  -webkit-border-radius: 100px;
+}

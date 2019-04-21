@@ -40,7 +40,6 @@ const store = new Vuex.Store({
     b6_base: process.env.BANNERLINK6_URL,
     debug: true,
     banners: [],
-    protectedBanners: [],
     presets: [],
     components: [],
     customTypes: {},
@@ -48,6 +47,7 @@ const store = new Vuex.Store({
     ensembles: [],
     currentPreset: {},
     currentBanner: {},
+    originalBanner: {},
     bannerSavingStatus: '',
     loadStatus: 'COMPLETE',
   },
@@ -56,11 +56,7 @@ const store = new Vuex.Store({
     GET_BANNERS: async function({ commit }) {
       commit('changeLoadingStatus', 'LOADING')
       const banners = await axios.get(`${this.state.api_base}v1/banners`)
-      const protectedBanners = await axios.get(`${this.state.api_base}v1/protected`)
-
-      const allbanners =
-
-      commit('setBanners', { protectedBanners: protectedBanners.data, banners: banners.data })
+      commit('setBanners', banners.data)
       commit('changeLoadingStatus', 'COMPLETE')
     },
 
@@ -175,11 +171,21 @@ const store = new Vuex.Store({
     getBannerProperty: (state) => (path) => {
       //console.log(eval('state.currentBanner.' + prop))
       const v = _.get(state.currentBanner, path)
+      console.log(v)
       return v
     },
     getTerm: (state => (term) => {
       return _.get(state.terms, term, '(no definition found)')
-    })
+    }),
+    hasChanged: (state) => (path) => {
+      if(_.isObject(_.get(state.currentBanner, path))){
+        return false
+      }
+      return _.get(state.currentBanner, path) != _.get(state.originalBanner, path)
+    },
+    getOriginal: (state) => (path) => {
+      return _.get(state.originalBanner, path)
+    },
   },
 
   mutations: {
@@ -202,14 +208,13 @@ const store = new Vuex.Store({
     },
 
     setCurrentBanner: function(currentState, data) {
-      currentState.currentBanner = data
+      currentState.currentBanner = _.cloneDeep(data)
+      currentState.originalBanner = _.cloneDeep(data)
+      console.log(currentState.currentBanner)
     },
 
     setBanners: function(currentState, data) {
-      currentState.banners = data.banners
-      currentState.protectedBanners = data.protectedBanners
-
-      console.log(currentState.protectedBanners)
+      currentState.banners = data
     },
 
     setCurrentPreset: function(currentState, data) {
@@ -251,7 +256,7 @@ let historyIndex = 0
 
 function pushState() {
   history.unshift(_.clone(store.state))
-  log('state pushed', history)
+  //log('state pushed', history)
 }
 
 export default store

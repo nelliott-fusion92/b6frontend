@@ -23,8 +23,6 @@
       this.$store.dispatch('GET_COMPONENTS')
       this.$store.dispatch('GET_CUSTOMTYPES')
       this.$store.dispatch('GET_TERMS')
-    },
-    mounted () {
       this.$store.dispatch('GET_BANNER', this.id)
     },
     computed: {
@@ -36,6 +34,9 @@
       },
       banner: function() {
         return this.$store.state.currentBanner
+      },
+      components: function() {
+        return this.$store.state.components
       },
     },
     methods: {
@@ -54,7 +55,10 @@
       },
       previewBanner: function() {
         window.open(`${this.$store.state.b6_base}banner/${this.banner._id}`)
-      }
+      },
+      setBannerProperty: function(e) {
+        this.$store.dispatch('SET_BANNER_PROPERTY', e)
+      },
     },
   }
 
@@ -63,19 +67,24 @@
 <template>
 
   <div v-if="loadStatus">
-    <pageheader v-if="banner" :title="banner.name" />
+    <pageheader v-if="banner" :title="banner['name']" />
     <div class="bannerid">#{{banner._id}}</div>
     <div class="greenbtn" @click="previewBanner">Preview</div><br /><br />
     <div class="panel">
       <h3>Banner Details</h3>
       <div class="panelbody">
-        <label>Banner Name</label>
-        <input v-model="banner.name" />
-        <label>Dimensions</label><br />
-        <input class="smallinput" :value="banner.width" /> <input class="smallinput" :value="banner.height" />
-        <br />
-        <label>Description</label>
-        <textarea :value="banner.description"></textarea>
+        <input
+          v-if="banner && components"
+          v-for="(prop, propkey) in components.Banner.editableParameters"
+          :key="propkey"
+          :value="banner[propkey] || components.Banner.defaults[propkey]"
+          :componentName="components.Banner.name"
+          :propkey="propkey"
+          @input="setBannerProperty"
+          :path="`${propkey}`"
+          :type="prop.type"
+          :options="prop.options"
+        />
       </div>
     </div>
     <div class="panel">
@@ -114,6 +123,7 @@
     vertical-align:top;
     background: #050505;
     border: solid 1px #4A4A4A;
+    overflow-x: hidden;
   }
   .panel h3 {
     background-color: #212121;

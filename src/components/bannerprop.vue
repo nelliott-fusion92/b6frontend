@@ -15,7 +15,6 @@
     data () {
       return {
         content: this.value,
-        original: this.value,
       }
     },
     computed: {
@@ -23,11 +22,7 @@
         return this.$store.getters.getTerm(this.propkey)
       },
       changed: function() {
-        if(this.content && this.original)
-          return this.content.toString() != this.original.toString();
-
-        return false
-
+        return this.$store.getters.hasChanged(this.path)
       },
       isObject: function(){
         return this.type == 'object'
@@ -35,6 +30,7 @@
     },
     methods: {
       handleInput: function(e) {
+        console.log(this.path)
         this.$emit('input', {
           path: this.path,
           val: this.content,
@@ -51,7 +47,7 @@
         this.$emit('input', e);
       },
       resetValue: function(e){
-        this.content = this.original
+        this.content = this.$store.getters.getOriginal(this.path)
         this.$emit('input', {
           path: this.path,
           val: this.content,
