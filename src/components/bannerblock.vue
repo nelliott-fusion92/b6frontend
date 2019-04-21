@@ -6,7 +6,8 @@
     props: [
       'banner',
       'bannerURL',
-      'isPreset'
+      'isPreset',
+      'isProtected',
     ],
     methods: {
       deleteBanner: function(e) {
@@ -61,7 +62,7 @@
 
 <template>
 
-  <router-link :to="bannerURL" v-if="this.banner.name" class="bannerblock">
+  <router-link :to="bannerURL" v-if="this.banner.name" class="bannerblock" :class="{isProtected: isProtected}">
 
       <div>
         <h4 class="name">{{ this.banner.name }}</h4>
@@ -71,7 +72,9 @@
         <div class="description">{{ this.banner.description }}</div>
         <div v-if="!isPreset" @click="getPreview" class="ext">Preview</div>
         <div class="imagesamples" v-html="this.imagePreviews"></div>
-        <div v-if="!isPreset" title="Delete banner" class="delete" @click="deleteBanner"><i class="fas fa-trash-alt"></i></div>
+        <div v-if="!isPreset && isProtected" title="protected" class="locked" ><i class="fas fa-lock"></i></div>
+        <div v-if="!isPreset && !isProtected" title="Delete banner" class="delete" @click="deleteBanner"><i class="fas fa-trash-alt"></i></div>
+
       </div>
 
   </router-link>
@@ -180,6 +183,14 @@
     padding: 2px 4px;
     color: #0AA;
     z-index: 10;
+  }
+  .locked {
+    position: absolute;
+    right: 5px;
+    bottom: 2px;
+    font-size: 11px;
+    z-index: 11;
+    color: #FF0;
   }
 
 </style>

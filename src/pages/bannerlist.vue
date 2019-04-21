@@ -27,6 +27,9 @@
       banners: function() {
         return this.$store.state.banners
       },
+      protectedBanners: function() {
+        return this.$store.state.protectedBanners
+      },
     },
 
 
@@ -39,7 +42,8 @@
   <div v-if="loadStatus">
 
     <pageheader v-bind:title="$route.name" />
-    <bannerblock class="bannerblock" v-for="banner in banners" :banner="banner" :isPreset="false" :bannerURL="'/banners/' + banner._id" :key="banner._id" />
+    <bannerblock class="bannerblock" v-for="banner in protectedBanners" :banner="banner" :isPreset="false" :isProtected="true" :bannerURL="'/banners/' + banner._id" :key="banner._id" />
+    <bannerblock class="bannerblock" v-for="banner in banners" :banner="banner" :isPreset="false" :isProtected="false" :bannerURL="'/banners/' + banner._id" :key="banner._id" />
 
   </div>
 

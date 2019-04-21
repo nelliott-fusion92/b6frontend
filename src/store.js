@@ -40,6 +40,7 @@ const store = new Vuex.Store({
     b6_base: process.env.BANNERLINK6_URL,
     debug: true,
     banners: [],
+    protectedBanners: [],
     presets: [],
     components: [],
     customTypes: {},
@@ -54,8 +55,12 @@ const store = new Vuex.Store({
 
     GET_BANNERS: async function({ commit }) {
       commit('changeLoadingStatus', 'LOADING')
-      const data = await axios.get(`${this.state.api_base}v1/banners`)
-      commit('setBanners', data.data)
+      const banners = await axios.get(`${this.state.api_base}v1/banners`)
+      const protectedBanners = await axios.get(`${this.state.api_base}v1/protected`)
+
+      const allbanners =
+
+      commit('setBanners', { protectedBanners: protectedBanners.data, banners: banners.data })
       commit('changeLoadingStatus', 'COMPLETE')
     },
 
@@ -201,7 +206,10 @@ const store = new Vuex.Store({
     },
 
     setBanners: function(currentState, data) {
-      currentState.banners = data
+      currentState.banners = data.banners
+      currentState.protectedBanners = data.protectedBanners
+
+      console.log(currentState.protectedBanners)
     },
 
     setCurrentPreset: function(currentState, data) {
