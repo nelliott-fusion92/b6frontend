@@ -57,7 +57,6 @@
         window.open(`${this.$store.state.b6_base}banner/${this.banner._id}`)
       },
       setBannerProperty: function(e) {
-        console.log(e)
         this.$store.dispatch('SET_BANNER_PROPERTY', e)
       },
     },
@@ -69,8 +68,10 @@
 
   <div v-if="loadStatus && banner && components">
     <pageheader :title="banner['name']" />
-    <div class="bannerid">#{{banner._id}}</div>
+    <div class="description">{{banner.description}}</div>
     <div class="greenbtn" @click="previewBanner">Preview</div><br /><br />
+
+
     <div class="panel">
       <h3>Banner Details</h3>
       <div class="panelbody">
@@ -79,7 +80,6 @@
           v-for="(prop, propkey) in components.Banner.editableParameters"
           :key="propkey"
           :value="banner[propkey]"
-          :content="banner[propkey]"
           componentName="Banner"
           :propkey="propkey"
           @input="setBannerProperty"
@@ -91,9 +91,20 @@
       </div>
     </div>
     <div class="panel">
-      <h3>Services</h3>
+      <h3>NAPI</h3>
       <div class="panelbody">
-        <Services />
+        <Bannerprop
+          v-if="banner && components"
+          v-for="(prop, propkey) in components.NAPI.editableParameters"
+          :key="propkey"
+          :value="banner.services[0].options[propkey]"
+          componentName="NAPI"
+          :propkey="propkey"
+          @input="setBannerProperty"
+          :path="`services[0].options.${propkey}`"
+          :type="prop.type"
+          :options="prop.options"
+        />
       </div>
     </div>
     <div class="panel bigpanel">
@@ -116,16 +127,21 @@
 
   @import '../../assets/theme.scss';
 
+  .description {
+    margin: 10px 0;
+    font-family: 'Open Sans', sans;
+    color: #0FF;
+  }
+
   .panel {
     display: inline-block;
     width: 300px;
-    height: 400px;
-    max-height: 400px;
-    overflow-y: auto;
-    margin: 0 5px 5px 0;
+
+    margin: 0 5px 8px 0;
     vertical-align:top;
     background: #050505;
     border: solid 1px #4A4A4A;
+    overflow-y: hidden;
     overflow-x: hidden;
   }
   .panel h3 {
@@ -141,6 +157,10 @@
   }
   .panelbody {
     padding: 10px;
+    height: 400px;
+    max-height: 400px;
+    overflow-x: hidden;
+    overflow-y: auto;
   }
   .bigpanel {
     display: block;
@@ -159,9 +179,8 @@
     display: inline-block;
   }
   .bannerid {
-    color: #0FF;
-    font-size: 20px;
-    margin: 0 0 10px 0;
+    font-size: 14px;
+
   }
   .banner-state {
     font-size: 16px;

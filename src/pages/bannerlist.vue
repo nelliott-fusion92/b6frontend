@@ -20,8 +20,8 @@
       pageheader,
       confirmation,
     },
-    mounted () {
-      this.$store.dispatch('GET_BANNERS')
+    async created () {
+      await this.$store.dispatch('GET_BANNERS')
     },
     computed: {
       banners: function() {
@@ -42,7 +42,13 @@
   <div v-if="loadStatus">
 
     <pageheader v-bind:title="$route.name" />
-    <bannerblock class="bannerblock" v-for="banner in banners" :banner="banner" :isPreset="false" :bannerURL="'/banners/' + banner._id" :key="banner._id" />
+    <bannerblock
+      class="bannerblock"
+      v-for="banner in banners"
+      :banner="banner"
+      :isPreset="false"
+      :bannerURL="'/banners/' + banner._id"
+      :key="banner._id" />
 
   </div>
 
