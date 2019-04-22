@@ -19,11 +19,11 @@
       Bannerprop,
       pageheader,
     },
-    beforeMount () {
+    async created () {
+      await this.$store.dispatch('GET_BANNER', this.id)
       this.$store.dispatch('GET_COMPONENTS')
       this.$store.dispatch('GET_CUSTOMTYPES')
       this.$store.dispatch('GET_TERMS')
-      this.$store.dispatch('GET_BANNER', this.id)
     },
     computed: {
       bannerSavingStatus: function() {
@@ -57,7 +57,8 @@
         window.open(`${this.$store.state.b6_base}banner/${this.banner._id}`)
       },
       setBannerProperty: function(e) {
-        this.$store.dispatch('SET_BANNER_PROPERTY', {path: e.srcElement.attributes.path.value, val: e.srcElement.value})
+        console.log(e)
+        this.$store.dispatch('SET_BANNER_PROPERTY', e)
       },
     },
   }
@@ -66,30 +67,27 @@
 
 <template>
 
-  <div v-if="loadStatus">
-    <pageheader v-if="banner" :title="banner['name']" />
+  <div v-if="loadStatus && banner && components">
+    <pageheader :title="banner['name']" />
     <div class="bannerid">#{{banner._id}}</div>
     <div class="greenbtn" @click="previewBanner">Preview</div><br /><br />
     <div class="panel">
       <h3>Banner Details</h3>
       <div class="panelbody">
-        <div
+        <Bannerprop
           v-if="banner && components"
           v-for="(prop, propkey) in components.Banner.editableParameters"
-        >
-          <label>{{propkey}}</label>
-          <input
-            v-if="banner && components"
-            :key="propkey"
-            :value="banner[propkey]"
-            :componentName="components.Banner.name"
-            :propkey="propkey"
-            @input="setBannerProperty"
-            :path="`${propkey}`"
-            :type="prop.type"
-            :options="prop.options"
-          />
-        </div>
+          :key="propkey"
+          :value="banner[propkey]"
+          :content="banner[propkey]"
+          componentName="Banner"
+          :propkey="propkey"
+          @input="setBannerProperty"
+          :path="`${propkey}`"
+          :type="prop.type"
+          :options="prop.options"
+        />
+
       </div>
     </div>
     <div class="panel">

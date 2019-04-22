@@ -177,6 +177,9 @@ const store = new Vuex.Store({
     getTerm: (state => (term) => {
       return _.get(state.terms, term, '(no definition found)')
     }),
+    getComponents: (state => {
+      return state.components
+    }),
     hasChanged: (state) => (path) => {
       if(_.isObject(_.get(state.currentBanner, path))){
         return false
@@ -210,7 +213,6 @@ const store = new Vuex.Store({
     setCurrentBanner: function(currentState, data) {
       currentState.currentBanner = _.cloneDeep(data)
       currentState.originalBanner = _.cloneDeep(data)
-      console.log(currentState.currentBanner)
     },
 
     setBanners: function(currentState, data) {

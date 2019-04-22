@@ -18,8 +18,11 @@
       }
     },
     computed: {
+      components: function() {
+        return this.$store.state.components
+      },
       term: function(){
-        return this.$store.getters.getTerm(this.propkey)
+        return this.$store.getters.getTerm(this.$vnode.key)
       },
       changed: function() {
         return this.$store.getters.hasChanged(this.path)
@@ -59,8 +62,8 @@
 </script>
 
 <template>
-  <div class="prop" :class="{ changed: changed, objectpropgroup: isObject }">
-    <label>{{propkey}} <span class="type">{{type}}</span> <span class="resetvalue" v-show="changed" @click="resetValue">(reset)</span></label>
+  <div v-if="components" class="prop" :class="{ changed: changed, objectpropgroup: isObject }">
+    <label>{{$vnode.key}} <span class="type">{{type}}</span> <span class="resetvalue" v-show="changed" @click="resetValue">(reset)</span></label>
     <div class="description">{{term}}</div>
     <div v-if="type === 'color'">
       <div class="colorbox" :style="{backgroundColor: content}"></div>
@@ -82,7 +85,7 @@
     <div v-else-if="type === 'object'">
       <Bannerprop
         class="objectprop"
-        v-for="(subprop, subpropkey) in $store.state.components[this.componentName].editableParameters[this.propkey].props"
+        v-for="(subprop, subpropkey) in $store.state.components[this.componentName].editableParameters[this.$vnode.key].props"
         :componentName="componentName"
         :value="content[subpropkey]"
         :propkey="subpropkey"
