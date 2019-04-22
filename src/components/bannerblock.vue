@@ -46,7 +46,7 @@
         let count = 0;
         _.each(images, (i) => {
           if(count < 10){
-            str += `<img width="40" height="40" src="${i}" />`
+            str += `<img width="20" height="20" src="${i}" />`
             count++;
           }
         })
@@ -73,7 +73,7 @@
         <div class="imagesamples" v-html="this.imagePreviews"></div>
 
         <div v-if="!isPreset && banner.protected == 'true'" title="protected" class="locked" ><i class="fas fa-lock"></i></div>
-        <div v-if="!isPreset && banner.protected == 'false'" title="Delete banner" class="delete" @click="deleteBanner"><i class="fas fa-trash-alt"></i></div>
+        <div v-if="!isPreset && (banner.protected == 'false' || !banner.protected)" title="Delete banner" class="delete" @click="deleteBanner"><i class="fas fa-trash-alt"></i></div>
 
       </div>
 
@@ -111,10 +111,9 @@
   .bannerblock:hover .created {
     color: #0FF;
   }
-  .bannerblock img {
-    width: 40px;
-    height: 40px;
+  .imagesamples img {
     display: inline-block;
+    float: left !important;
   }
   .name {
     font-size: 16px;
@@ -161,6 +160,8 @@
   }
   .imagesamples {
     margin: 5px 0 0 0;
+    height: 20px;
+    overflow:hidden;
   }
   .delete {
     position: absolute;

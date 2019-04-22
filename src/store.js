@@ -40,6 +40,7 @@ const store = new Vuex.Store({
     b6_base: process.env.BANNERLINK6_URL,
     debug: true,
     banners: [],
+    filteredBanners: [],
     presets: [],
     components: [],
     customTypes: {},
@@ -50,6 +51,7 @@ const store = new Vuex.Store({
     originalBanner: {},
     bannerSavingStatus: '',
     loadStatus: 'COMPLETE',
+    bannerlistFilters: [],
   },
   actions: {
 
@@ -57,18 +59,29 @@ const store = new Vuex.Store({
       commit('changeLoadingStatus', 'LOADING')
       const banners = await axios.get(`${this.state.api_base}v1/banners`)
       commit('setBanners', banners.data)
+      commit('applyBannerlistFilters')
       commit('changeLoadingStatus', 'COMPLETE')
     },
 
-    GET_BANNER: async function({ commit }, payload) {
+    SET_BANNERLIST_FILTER: async function({ commit }, payload) {
+      commit('setBannerlistFilter', payload)
+      commit('applyBannerlistFilters')
+    },
+
+    RESET_BANNERLIST_FILTERS: async function({ commit }) {
+      commit('resetBannerlistFilters')
+      commit('applyBannerlistFilters')
+    },
+
+    GET_BANNER: async function({ commit }, bid) {
       commit('changeLoadingStatus', 'LOADING')
-      const data = await axios.get(`${this.state.api_base}v1/banners/${payload}`)
+      const data = await axios.get(`${this.state.api_base}v1/banners/${bid}`)
       commit('setCurrentBanner', data.data)
       commit('changeLoadingStatus', 'COMPLETE')
     },
 
-    DELETE_BANNER: async function({ commit }, payload) {
-      const data = await axios.delete(`${this.state.api_base}v1/banners/${payload}`)
+    DELETE_BANNER: async function({ commit }, bid) {
+      const data = await axios.delete(`${this.state.api_base}v1/banners/${bid}`)
       this.dispatch('GET_BANNERS')
     },
 
@@ -79,9 +92,9 @@ const store = new Vuex.Store({
       commit('changeLoadingStatus', 'COMPLETE')
     },
 
-    GET_PRESET: async function({ commit }, payload) {
+    GET_PRESET: async function({ commit }, pid) {
       commit('changeLoadingStatus', 'LOADING')
-      const data = await axios.get(`${this.state.api_base}v1/presets/${payload}`)
+      const data = await axios.get(`${this.state.api_base}v1/presets/${pid}`)
       commit('setCurrentPreset', data.data)
       commit('changeLoadingStatus', 'COMPLETE')
     },
@@ -169,10 +182,7 @@ const store = new Vuex.Store({
 
   getters: {
     getBannerProperty: (state) => (path) => {
-      //console.log(eval('state.currentBanner.' + prop))
-      const v = _.get(state.currentBanner, path)
-      console.log(v)
-      return v
+      return _.get(state.currentBanner, path)
     },
     getTerm: (state => (term) => {
       return _.get(state.terms, term, '(no definition found)')
@@ -200,6 +210,59 @@ const store = new Vuex.Store({
 
     redo: function(currentState, data){
 
+    },
+
+    setBannerlistFilter: function(currentState, data) {
+      try {
+        _.remove(currentState.bannerlistFilters, (f) => {
+          return f.field == data.field && f.operator == data.operator
+        })
+      }
+      catch(err){}
+
+      if(data.value){
+        currentState.bannerlistFilters.push(data)
+      }
+
+      if(currentState.bannerlistFilters.length == 0){
+
+      }
+      console.log(currentState.bannerlistFilters)
+    },
+
+    resetBannerlistFilters: function(currentState) {
+      console.log('reset')
+      currentState.bannerlistFilters = []
+    },
+
+    applyBannerlistFilters: function(currentState, data) {
+      currentState.filteredBanners = _.cloneDeep(currentState.banners)
+
+      _.each(currentState.bannerlistFilters, (f) => {
+        currentState.filteredBanners = _.filter(currentState.filteredBanners, (b) => {
+          switch(f.operator) {
+            case '=':
+            return _.get(b, f.field) == f.value
+            break;
+            case '^':
+            return _.get(b, f.field).toString().toLowerCase().indexOf(f.value.toString().toLowerCase()) > -1;
+            break;
+            case '>':
+            return _.get(b, f.field) > f.value
+            break;
+            case '<':
+            return _.get(b, f.field) < f.value
+            break;
+            case '>=':
+            return _.get(b, f.field) >= f.value
+            break;
+            case '<=':
+            return _.get(b, f.field) <= f.value
+            break;
+          }
+        })
+
+      })
     },
 
     changeLoadingStatus: function(currentState, data) {

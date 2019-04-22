@@ -37,7 +37,7 @@
 <template>
 
   <div>
-    <div>
+    <div style="display:none;">
       <h3 class="translabel" @click="showTransIn = !showTransIn">Transition In <i class="fas fa-angle-double-down"></i></h3>
       <div v-show="showTransIn" class="transition">
         <label>Duration (ms)</label>
@@ -59,7 +59,7 @@
     <div v-show="showComponents" class="components">
       <Bannercomponent class="component" v-for="(comp, compkey) in state.components" :component="comp" :statekey="statekey" :compkey="compkey" :key="compkey" />
     </div>
-    <div>
+    <div style="display:none;">
       <h3 class="translabel" @click="showTransOut = !showTransOut">Transition Out <i class="fas fa-angle-double-down"></i></h3>
       <div v-show="showTransOut" class="transition">
         <label>Duration (ms)</label>

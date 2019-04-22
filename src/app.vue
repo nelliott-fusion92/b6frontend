@@ -44,7 +44,6 @@
           </path>
         </svg>
       </div>
-      <div class="push"></div>
     </div>
     <footer id="footer"><span>© Liquidus Marketing 2019</span></footer>
   </div>

@@ -22,15 +22,23 @@
     },
     async created () {
       await this.$store.dispatch('GET_BANNERS')
+      await this.$store.dispatch('RESET_BANNERLIST_FILTERS')
+      //await this.$store.dispatch('SET_BANNERLIST_FILTER', { field: 'name', operator: '^', value: 'walgreen' })
+      //await this.$store.dispatch('SET_BANNERLIST_FILTER', { field: 'width', operator: '>', value: '300' })
     },
     computed: {
       banners: function() {
-        return this.$store.state.banners
+        return this.$store.state.filteredBanners
       },
       protectedBanners: function() {
         return this.$store.state.protectedBanners
       },
     },
+    methods: {
+      setSearchText: async function(e){
+        await this.$store.dispatch('SET_BANNERLIST_FILTER', { field: 'name', operator: '^', value: e.srcElement.value })
+      }
+    }
 
 
   }
@@ -42,6 +50,11 @@
   <div v-if="loadStatus">
 
     <pageheader v-bind:title="$route.name" />
+    <div id="filters">
+      <h3>Filters</h3>
+      <label>Search</label>
+      <input @input="setSearchText" />
+    </div>
     <bannerblock
       class="bannerblock"
       v-for="banner in banners"
@@ -49,6 +62,8 @@
       :isPreset="false"
       :bannerURL="'/banners/' + banner._id"
       :key="banner._id" />
+
+    <div v-if="banners.length == 0">No banners found with current filters.</div>
 
   </div>
 
@@ -74,6 +89,12 @@
 
   i {
 
+  }
+
+  #filters {
+    padding: 5px;
+    border-bottom: dotted 1px #999;
+    margin: 0 0 10px 0;
   }
 
   .listlink {

@@ -136,7 +136,6 @@
   .panel {
     display: inline-block;
     width: 300px;
-
     margin: 0 5px 8px 0;
     vertical-align:top;
     background: #050505;
@@ -173,6 +172,8 @@
   }
   .bigpanelbody {
     padding: 0;
+    height: auto;
+    max-height: none;
   }
   .statelist {
     width: 100%;
