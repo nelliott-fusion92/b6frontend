@@ -62,7 +62,7 @@
 </script>
 
 <template>
-  <div v-if="components" class="prop" :class="{ changed: changed, objectpropgroup: isObject }">
+  <div class="prop" :class="{ changed: changed, objectpropgroup: isObject }">
     <label>{{$vnode.key}} <span class="type">{{type}}</span> <span class="resetvalue" v-show="changed" @click="resetValue">(reset)</span></label>
     <div class="description">{{term}}</div>
     <div v-if="type === 'color'">

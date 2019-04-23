@@ -12,17 +12,7 @@ import store from './store'
 import moment from 'moment'
 
 Vue.use(LoadScript);
-Vue.config.productionTip = false
-
-Vue.mixin({
-  computed: {
-    loadStatus: function() {
-      if(this.$store.state.loadStatus === 'COMPLETE')
-        return true
-      return false
-    }
-  }
-})
+Vue.config.productionTip = true
 
 Vue.mixin({
   methods: {

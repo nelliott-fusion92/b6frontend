@@ -71,12 +71,10 @@
     <div class="description">{{banner.description}}</div>
     <div class="greenbtn" @click="previewBanner">Preview</div><br /><br />
 
-
     <div class="panel">
       <h3>Banner Details</h3>
       <div class="panelbody">
         <Bannerprop
-          v-if="banner && components"
           v-for="(prop, propkey) in components.Banner.editableParameters"
           :key="propkey"
           :value="banner[propkey]"
@@ -94,7 +92,6 @@
       <h3>NAPI</h3>
       <div class="panelbody">
         <Bannerprop
-          v-if="banner && components"
           v-for="(prop, propkey) in components.NAPI.editableParameters"
           :key="propkey"
           :value="banner.services[0].options[propkey]"
@@ -116,8 +113,8 @@
       </div>
     </div>
     <div @click="updateBanner" class="greenbtn">Save</div>
-    <div @click="saveAsPreset" class="greenbtn">Save as preset</div>
     <div @click="saveBanner" class="greenbtn">Save as new</div>
+    <div @click="saveAsPreset" class="greenbtn">Save as preset</div>
     <span :class="{ animateflicker : isSavingComplete }" class="loading-display">{{bannerSavingStatus}}</span>
   </div>
 
@@ -135,7 +132,7 @@
 
   .panel {
     display: inline-block;
-    width: 300px;
+    width: 400px;
     margin: 0 5px 8px 0;
     vertical-align:top;
     background: #050505;

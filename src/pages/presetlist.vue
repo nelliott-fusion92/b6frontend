@@ -23,8 +23,8 @@
       pageheader,
       bannerblock,
     },
-    mounted () {
-      this.$store.dispatch('GET_PRESETS')
+    async created () {
+      await this.$store.dispatch('GET_PRESETS')
     },
     computed: {
       presets: function() {

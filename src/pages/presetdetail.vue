@@ -7,8 +7,8 @@
     props: [
       'id',
     ],
-    mounted () {
-      this.$store.dispatch('GET_PRESET', this.id)
+    async created () {
+      await this.$store.dispatch('GET_PRESET', this.id)
     },
     methods: {
       createBannerFromPreset: function() {

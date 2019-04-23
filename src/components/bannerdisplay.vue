@@ -24,11 +24,14 @@
       }
     },
 
+
     mounted: function() {
+
       var jq = document.createElement('script')
       jq.setAttribute('src', 'http://code.jquery.com/jquery-3.3.1.min.js')
       document.getElementById('wombat-container').appendChild(jq)
       var liqEl = document.createElement('script')
+      liqEl.setAttribute('type', 'text/javascript')
       liqEl.innerHTML = `
         var liqBanner = {
           bannerID: '${this.banner._id}',
@@ -36,6 +39,7 @@
             id: ${this.banner.id_counter},
             tagName: 'tagname',
           },
+          campaignID: '8c2c595dc4ead229'
           cacheBuster: '',
           expandDirection: 7,
           clickTags: [
@@ -54,8 +58,10 @@
       document.getElementById('wombat-container').appendChild(liqEl);
 
       let scriptEl = document.createElement('script');
-      scriptEl.setAttribute('src', 'http://localhost:2048/js/wombat.js?a' + Math.floor(Math.random() * 9999));
+      scriptEl.setAttribute('src', 'https://bl6l.liquidus.net/marsupial');
+      scriptEl.setAttribute('type', 'text/javascript');
       document.getElementById('wombat-container').appendChild(scriptEl);
+
     },
   }
 
@@ -64,6 +70,7 @@
 <template>
 
   <div>
+    {{ this.banner._id }}
     <div id="wombat-container">
     </div>
 

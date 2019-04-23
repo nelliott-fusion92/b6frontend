@@ -227,11 +227,9 @@ const store = new Vuex.Store({
       if(currentState.bannerlistFilters.length == 0){
 
       }
-      console.log(currentState.bannerlistFilters)
     },
 
     resetBannerlistFilters: function(currentState) {
-      console.log('reset')
       currentState.bannerlistFilters = []
     },
 
