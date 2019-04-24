@@ -4,6 +4,7 @@
   import bannerblock from '../components/bannerblock.vue'
   import pageheader from '../components/pageheader.vue'
   import confirmation from '../components/confirmation.vue'
+  import pagination from '../components/pagination.vue'
 
   export default {
     props: [
@@ -19,10 +20,11 @@
       bannerblock,
       pageheader,
       confirmation,
+      pagination,
     },
     async created () {
       await this.$store.dispatch('GET_BANNERS')
-      await this.$store.dispatch('RESET_BANNERLIST_FILTERS')
+      this.$store.dispatch('RESET_BANNERLIST_FILTERS')
       //await this.$store.dispatch('SET_BANNERLIST_FILTER', { field: 'name', operator: '^', value: 'walgreen' })
       //await this.$store.dispatch('SET_BANNERLIST_FILTER', { field: 'width', operator: '>', value: '300' })
     },
@@ -36,7 +38,14 @@
     },
     methods: {
       setSearchText: async function(e){
+        if(e.srcElement.value.length === 3){
+
+        }
         await this.$store.dispatch('SET_BANNERLIST_FILTER', { field: 'name', operator: '^', value: e.srcElement.value })
+      },
+      turnPage: function(e) {
+        console.log(e)
+        this.$store.dispatch('TURN_BANNERS_PAGE', { limit: e.limit, skip: e.skip })
       }
     }
 
@@ -47,7 +56,7 @@
 
 <template>
 
-  <div v-if="loadStatus">
+  <div>
 
     <pageheader v-bind:title="$route.name" />
     <div id="filters">
@@ -55,15 +64,18 @@
       <label>Search</label>
       <input @input="setSearchText" />
     </div>
-    <bannerblock
-      class="bannerblock"
-      v-for="banner in banners"
-      :banner="banner"
-      :isPreset="false"
-      :bannerURL="'/banners/' + banner._id"
-      :key="banner._id" />
+    <pagination :class="{ disabled: !loadStatus }" :limit="this.$store.state.bannersQuery.limit" :skip="this.$store.state.bannersQuery.skip" @change="turnPage" />
 
-    <div v-if="banners.length == 0">No banners found with current filters.</div>
+      <bannerblock
+        class="bannerblock"
+        v-for="banner in banners"
+        :banner="banner"
+        :isPreset="false"
+        :bannerURL="'/banners/' + banner._id"
+        :key="banner._id" />
+
+      <div v-if="banners.length == 0">No banners found with current filters.</div>
+
 
   </div>
 
@@ -71,7 +83,10 @@
 
 <style lang="css" scoped>
 
-
+  .disabled {
+    opacity: .5;
+    pointer-events: none;
+  }
   #listbox-id-1 {
     width: 300px;
     left: 155px;

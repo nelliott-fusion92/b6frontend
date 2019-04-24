@@ -40,6 +40,11 @@ const store = new Vuex.Store({
     b6_base: process.env.BANNERLINK6_URL,
     debug: true,
     banners: [],
+    bannersQuery: {
+      skip: 0,
+      limit: 10,
+      name: '',
+    },
     filteredBanners: [],
     presets: [],
     components: [],
@@ -57,10 +62,21 @@ const store = new Vuex.Store({
 
     GET_BANNERS: async function({ commit }) {
       commit('changeLoadingStatus', 'LOADING')
-      const banners = await axios.get(`${this.state.api_base}v1/banners`)
+      const banners = await axios.get(`${this.state.api_base}v1/banners`, {
+        params: {
+          limit: this.state.bannersQuery.limit,
+          skip: this.state.bannersQuery.skip,
+          name: this.state.bannersQuery.name,
+        },
+      })
       commit('setBanners', banners.data)
       commit('applyBannerlistFilters')
       commit('changeLoadingStatus', 'COMPLETE')
+    },
+
+    TURN_BANNERS_PAGE: async function({ commit }, payload) {
+      commit('turnBannersPage', payload)
+      this.dispatch('GET_BANNERS')
     },
 
     SET_BANNERLIST_FILTER: async function({ commit }, payload) {
@@ -261,6 +277,11 @@ const store = new Vuex.Store({
         })
 
       })
+    },
+
+    turnBannersPage: function(currentState, data) {
+      currentState.bannersQuery.limit = data.limit
+      currentState.bannersQuery.skip = data.skip
     },
 
     changeLoadingStatus: function(currentState, data) {
