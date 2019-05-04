@@ -72,8 +72,8 @@
         <div v-if="!isPreset" @click="getPreview" class="ext">Preview</div>
         <div class="imagesamples" v-html="this.imagePreviews"></div>
 
-        <div v-if="!isPreset && banner.protected == 'true'" title="protected" class="locked" ><i class="fas fa-lock"></i></div>
-        <div v-if="!isPreset && (banner.protected == 'false' || !banner.protected)" title="Delete banner" class="delete" @click="deleteBanner"><i class="fas fa-trash-alt"></i></div>
+        <div v-if="!isPreset && banner.protected == 'true' || banner.protected == true" title="protected" class="locked" ><i class="fas fa-lock"></i></div>
+        <div v-else title="Delete banner" class="delete" @click="deleteBanner"><i class="fas fa-trash-alt"></i></div>
 
       </div>
 

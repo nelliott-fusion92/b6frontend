@@ -30,7 +30,10 @@
         return this.$store.state.bannerSavingStatus
       },
       isSavingComplete: function() {
-        return this.$store.state.bannerSavingStatus != 'COMPLETE'
+        return this.$store.state.bannerSavingStatus == 'COMPLETE' || this.$store.state.bannerSavingStatus == 'ERROR'
+      },
+      isError: function() {
+        return this.$store.state.bannerSavingStatus == 'ERROR'
       },
       banner: function() {
         return this.$store.state.currentBanner
@@ -115,7 +118,7 @@
     <div @click="updateBanner" class="greenbtn">Save</div>
     <div @click="saveBanner" class="greenbtn">Save as new</div>
     <div @click="saveAsPreset" class="greenbtn">Save as preset</div>
-    <span :class="{ animateflicker : isSavingComplete }" class="loading-display">{{bannerSavingStatus}}</span>
+    <span :class="{ animateflicker : !isSavingComplete, error : isError }" class="loading-display">{{bannerSavingStatus}}</span>
   </div>
 
 </template>
@@ -128,6 +131,10 @@
     margin: 10px 0;
     font-family: 'Open Sans', sans;
     color: #0FF;
+  }
+
+  .error {
+    color: #F00 !important;
   }
 
   .panel {

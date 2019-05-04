@@ -29,7 +29,8 @@ function log(str, obj) {
 
 const loadStatuses = [
   'LOADING',
-  'COMPLETE'
+  'COMPLETE',
+  'ERROR'
 ]
 
 Vue.use(Vuex)
@@ -187,9 +188,13 @@ const store = new Vuex.Store({
         data: this.state.currentBanner,
         headers: { 'content-type': 'application/json' },
       })
+      .catch(error => {
+        commit('changeBannerSavingStatus', 'ERROR')
+      })
+
       commit('setCurrentBanner', newBanner.data)
       commit('changeBannerSavingStatus', 'COMPLETE')
-
+      
       return true
 
     },
