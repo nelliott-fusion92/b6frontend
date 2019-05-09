@@ -61,7 +61,22 @@ const store = new Vuex.Store({
   },
   actions: {
 
+    AUTH: async function({ commit }){
+      let r = await axios.post(
+        `https://login.microsoftonline.com/${ process.env.TENANT_ID }/oauth2/token`, {
+          data: {
+            response_type: 'client_credentials',
+            client_id: process.env.CLIENT_ID,
+            client_secret: process.env.CLIENT_SECRET,
+            resource: 'https://graph.microsoft.com',
+          }
+        }
+      )
+      console.log(r)
+    },
+
     GET_BANNERS: async function({ commit }) {
+      //store.dispatch('AUTH')
       commit('changeLoadingStatus', 'LOADING')
       const banners = await axios.get(`${this.state.api_base}v1/banners`, {
         params: {
@@ -189,12 +204,14 @@ const store = new Vuex.Store({
         headers: { 'content-type': 'application/json' },
       })
       .catch(error => {
-        commit('changeBannerSavingStatus', 'ERROR')
+        console.log(error)
+        commit('changeBannerSavingStatus', `ERROR: ${ error }`)
       })
+
 
       commit('setCurrentBanner', newBanner.data)
       commit('changeBannerSavingStatus', 'COMPLETE')
-      
+
       return true
 
     },
@@ -347,5 +364,7 @@ function pushState() {
   history.unshift(_.clone(store.state))
   //log('state pushed', history)
 }
+
+
 
 export default store

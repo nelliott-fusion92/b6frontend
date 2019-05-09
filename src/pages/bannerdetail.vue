@@ -30,10 +30,10 @@
         return this.$store.state.bannerSavingStatus
       },
       isSavingComplete: function() {
-        return this.$store.state.bannerSavingStatus == 'COMPLETE' || this.$store.state.bannerSavingStatus == 'ERROR'
+        return this.$store.state.bannerSavingStatus == 'COMPLETE' || this.$store.state.bannerSavingStatus.indexOf('ERROR') > -1
       },
       isError: function() {
-        return this.$store.state.bannerSavingStatus == 'ERROR'
+        return this.$store.state.bannerSavingStatus.indexOf('ERROR') > -1
       },
       banner: function() {
         return this.$store.state.currentBanner
