@@ -197,7 +197,27 @@ const store = new Vuex.Store({
 
     },
 
+    REGENERATE_BANNER: async function({ commit }, data) {
+      console.log('regen')
+      console.log(data)
+      commit('changeBannerSavingStatus', 'UPDATING EXISTING BANNER')
+      await axios.post(`${this.state.api_base}v1/banners/${data._id}`, {
+        data: data,
+        headers: { 'content-type': 'application/json' },
+      })
+      .catch(error => {
+        console.log(error)
+        commit('changeBannerSavingStatus', `ERROR: ${ error }`)
+      })
+      console.log('regen')
+      commit('changeBannerSavingStatus', 'COMPLETE')
+      console.log('complete')
+      return true
+
+    },
+
     UPDATE_BANNER: async function({ commit }) {
+      console.log('update')
       commit('changeBannerSavingStatus', 'UPDATING EXISTING BANNER')
       let newBanner = await axios.post(`${this.state.api_base}v1/banners/${this.state.currentBanner._id}`, {
         data: this.state.currentBanner,

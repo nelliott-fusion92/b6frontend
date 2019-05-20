@@ -29,6 +29,15 @@
       //await this.$store.dispatch('SET_BANNERLIST_FILTER', { field: 'width', operator: '>', value: '300' })
     },
     computed: {
+      bannerSavingStatus: function() {
+        return this.$store.state.bannerSavingStatus
+      },
+      isSavingComplete: function() {
+        return this.$store.state.bannerSavingStatus == 'COMPLETE' || this.$store.state.bannerSavingStatus.indexOf('ERROR') > -1
+      },
+      isError: function() {
+        return this.$store.state.bannerSavingStatus.indexOf('ERROR') > -1
+      },
       banners: function() {
         return this.$store.state.filteredBanners
       },
@@ -65,16 +74,16 @@
       <input @input="setSearchText" />
     </div>
     <pagination :class="{ disabled: !loadStatus }" :limit="this.$store.state.bannersQuery.limit" :skip="this.$store.state.bannersQuery.skip" @change="turnPage" />
+    <div :class="{ animateflicker : !isSavingComplete, error : isError }" class="loading-display">{{bannerSavingStatus}}</div>
+    <bannerblock
+      class="bannerblock"
+      v-for="banner in banners"
+      :banner="banner"
+      :isPreset="false"
+      :bannerURL="'/banners/' + banner._id"
+      :key="banner._id" />
 
-      <bannerblock
-        class="bannerblock"
-        v-for="banner in banners"
-        :banner="banner"
-        :isPreset="false"
-        :bannerURL="'/banners/' + banner._id"
-        :key="banner._id" />
-
-      <div v-if="banners.length == 0">No banners found with current filters.</div>
+    <div v-if="banners.length == 0">No banners found with current filters.</div>
 
 
   </div>
@@ -116,6 +125,40 @@
     font-family: 'Exo', sans-serif;
     font-weight: normal;
     color: #000;
+  }
+
+  .error {
+    color: #F00 !important;
+  }
+  .loading-display {
+    margin: 0 0 5px 0;
+  }
+  @keyframes flickerAnimation {
+    0%   { opacity:1; }
+    50%  { opacity:0; }
+    100% { opacity:1; }
+  }
+  @-o-keyframes flickerAnimation{
+    0%   { opacity:1; }
+    50%  { opacity:0; }
+    100% { opacity:1; }
+  }
+  @-moz-keyframes flickerAnimation{
+    0%   { opacity:1; }
+    50%  { opacity:0; }
+    100% { opacity:1; }
+  }
+  @-webkit-keyframes flickerAnimation{
+    0%   { opacity:1; }
+    50%  { opacity:0; }
+    100% { opacity:1; }
+  }
+  .animateflicker {
+     -webkit-animation: flickerAnimation .5s infinite;
+     -moz-animation: flickerAnimation .5s infinite;
+     -o-animation: flickerAnimation .5s infinite;
+      animation: flickerAnimation .5s infinite;
+      color: #FF0 !important;
   }
 
 </style>

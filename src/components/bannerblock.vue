@@ -16,11 +16,20 @@
       getPreview: function(e) {
         e.preventDefault()
         window.open(`${this.$store.state.b6_base}banner/${this.banner._id}`)
+      },
+      regenerate: function(e) {
+        e.preventDefault()
+        if(!this.isPreset) {
+          this.$store.dispatch('REGENERATE_BANNER', this.banner)
+        }
       }
     },
     computed: {
       expandable: function(){
         return this.banner.initWidth != this.banner.width || this.banner.initHeight != this.banner.height
+      },
+      protected: function() {
+        return this.banner.protected == true || this.banner.protected == 'true'
       },
       imagePreviews: function() {
         let d = this.banner
@@ -71,9 +80,13 @@
         <div class="description">{{ this.banner.description }}</div>
         <div v-if="!isPreset" @click="getPreview" class="ext">Preview</div>
         <div class="imagesamples" v-html="this.imagePreviews"></div>
+        <div class="bottom" v-if="!isPreset">
+          <div class="protected" v-if="this.protected"><i class="fas fa-lock"></i></div>
+          <div v-if="!this.protected" @click="deleteBanner"><i class="fas fa-trash-alt"></i></div>
+          <div @click="regenerate"><i class="fas fa-sync-alt"></i></div>
+        </div>
 
-        <div v-if="!isPreset && banner.protected == 'true' || banner.protected == true" title="protected" class="locked" ><i class="fas fa-lock"></i></div>
-        <div v-else-if="!isPreset" title="Delete banner" class="delete" @click="deleteBanner"><i class="fas fa-trash-alt"></i></div>
+
 
       </div>
 
@@ -163,15 +176,26 @@
     height: 20px;
     overflow:hidden;
   }
-  .delete {
+  .bottom{
     position: absolute;
-    right: 5px;
-    bottom: 2px;
-    font-size: 11px;
+    bottom:0;
+    text-align:right;
     z-index: 11;
+    width: 100%;
+    padding: 0 10px 2px 0;
   }
-  .delete:hover {
+  .bottom div {
+    display: inline;
+    z-index: 12;
+  }
+  .bottom div:hover {
     color: #0FF;
+  }
+  .protected {
+    color: #FF0;
+  }
+  .protected:hover {
+    color: #FF0 !important;
   }
   .created {
     font-size: 10px;
