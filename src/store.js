@@ -2090,6 +2090,13 @@ const store = new Vuex.Store({
 
     },
 
+    REGENERATE_ORDER: async function({ commit }) {
+    
+
+      return true
+
+    },
+
     GET_ORDER: async function({ commit }, id) {
       commit('changeLoadingStatus', 'LOADING')
       const data = await ax.get(`${this.state.api_base}v1/orders/${id}`)
