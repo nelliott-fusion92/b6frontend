@@ -23,7 +23,8 @@
       <div id="nav">
         <ul>
           <li><router-link :to="{ name: 'presets' }">Presets</router-link></li>
-          <li><router-link :to="{ name: 'banners' }">Generated Banners</router-link></li>
+          <li><router-link :to="{ name: 'banners' }">Single Banners</router-link></li>
+          <li><router-link :to="{ name: 'orders' }">Batch Orders</router-link></li>
           <li><router-link :to="{ name: 'components' }">Components</router-link></li>
           <li><router-link :to="{ name: 'ensembles' }">Ensembles</router-link></li>
         </ul>

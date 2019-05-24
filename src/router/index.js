@@ -3,12 +3,13 @@ import VueRouter from 'vue-router'
 import dotenv from 'dotenv/config'
 
 import Home from '../pages/home.vue'
-import Bitcoin from '../pages/bitcoin.vue'
 import Bannerlist from '../pages/bannerlist.vue'
 import Bannerdetail from '../pages/bannerdetail.vue'
 import Presetlist from '../pages/presetlist.vue'
 import Presetdetail from '../pages/presetdetail.vue'
 import Componentlist from '../pages/components.vue'
+import Orderlist from '../pages/orderlist.vue'
+import Orderdetail from '../pages/orderdetail.vue'
 import Documentation from '../pages/documentation.vue'
 import Ensembles from '../pages/ensembles.vue'
 import Errorpage from '../pages/errorpage.vue'
@@ -19,11 +20,6 @@ const api_base = process.env.BANNERLINK6_API_URL
 
 const r = new VueRouter({
   routes: [
-    {
-      path: '/bitcoin',
-      name: 'bitcoin',
-      component: Bitcoin,
-    },
     {
       path: '/banners',
       name: 'banners',
@@ -49,6 +45,19 @@ const r = new VueRouter({
       props: (route) => ({
         id: route.params.id,
       })
+    },
+    {
+      path: '/orders',
+      name: 'orders',
+      component: Orderlist,
+    },
+    {
+      path: '/orders/:id',
+      name: 'order',
+      component: Orderdetail,
+      props: (route) => ({
+        id: route.params.id,
+      }),
     },
     {
       path: '/components',

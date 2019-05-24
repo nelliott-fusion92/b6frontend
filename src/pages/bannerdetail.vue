@@ -139,7 +139,7 @@
 
   .panel {
     display: inline-block;
-    width: 400px;
+    width: 350px;
     margin: 0 5px 8px 0;
     vertical-align:top;
     background: #050505;

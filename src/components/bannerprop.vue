@@ -112,7 +112,7 @@
     display:inline-block;
     margin: 10px 0 !important;
     padding: 0 10px !important;
-    width: 350px;
+    width: 270px;
     vertical-align: middle;
     color: #0F0;
     font-family: 'Open Sans';
