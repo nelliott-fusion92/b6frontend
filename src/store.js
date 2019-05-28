@@ -98,6 +98,13 @@ const store = new Vuex.Store({
       commit('changeLoadingStatus', 'COMPLETE')
     },
 
+    PURGE_BANNERS: async function({ commit }) {
+      //store.dispatch('AUTH')
+      commit('changeLoadingStatus', 'LOADING')
+      const banners = await ax.get(`${this.state.api_base}v1/purge`)
+      commit('changeLoadingStatus', 'COMPLETE')
+    },
+
     TURN_BANNERS_PAGE: async function({ commit }, payload) {
       commit('turnBannersPage', payload)
       this.dispatch('GET_BANNERS')
@@ -211,7 +218,7 @@ const store = new Vuex.Store({
 "name": "B",
 "id_counter": 14797342,
 "description": "Controlled by arrows, expandable on mobile tap",
-"protected": "false",
+"protected": false,
 "order_id": null,
 "initWidth": 728,
 "initHeight": 90,
@@ -1171,10 +1178,13 @@ const store = new Vuex.Store({
 "macroSettings": []
 }]
       commit('changeBannerSavingStatus', 'SAVING PRESET AS NEW BANNER')
-      let newBanner = await ax.put(`${this.state.api_base}v1/banners`, {
+      let newBanner = await ax.post(`${this.state.api_base}v1/banners`, {
         //data: this.state.currentPreset,
         data: banners,
         headers: { 'content-type': 'application/json' },
+      })
+      .catch((err) => {
+        commit('changeBannerSavingStatus', 'ERROR SAVING BANNER')
       })
 
       console.log(newBanner.data)
@@ -2091,7 +2101,7 @@ const store = new Vuex.Store({
     },
 
     REGENERATE_ORDER: async function({ commit }) {
-    
+
 
       return true
 

@@ -7,6 +7,11 @@
     components: {
       Loader,
     },
+    computed: {
+      api_base: function() {
+        return this.$store.state.api_base
+      }
+    },
     data() {
       return {
         prevHeight: 0,
@@ -20,15 +25,18 @@
   <div id="app">
     <div id="header">
       <h1>Bannerlink 6</h1>
+      <div style="color: rgba(255,255,255,.33); position: relative; top: -15px; margin: 0 0 0 8px; font-size: 10px;">Using {{ api_base }}</div>
+
       <div id="nav">
         <ul>
           <li><router-link :to="{ name: 'presets' }">Presets</router-link></li>
           <li><router-link :to="{ name: 'banners' }">Single Banners</router-link></li>
           <li><router-link :to="{ name: 'orders' }">Batch Orders</router-link></li>
           <li><router-link :to="{ name: 'components' }">Components</router-link></li>
-          <li><router-link :to="{ name: 'ensembles' }">Ensembles</router-link></li>
+          <li><router-link :to="{ name: 'purge' }">Purge</router-link></li>
         </ul>
       </div>
+
     </div>
     <div id="main">
       <transition name="page" mode="out-in">

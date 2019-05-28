@@ -12,6 +12,7 @@ import Orderlist from '../pages/orderlist.vue'
 import Orderdetail from '../pages/orderdetail.vue'
 import Documentation from '../pages/documentation.vue'
 import Ensembles from '../pages/ensembles.vue'
+import Purge from '../pages/Purge.vue'
 import Errorpage from '../pages/errorpage.vue'
 
 Vue.use(VueRouter)
@@ -73,6 +74,11 @@ const r = new VueRouter({
       path: '/ensembles',
       name: 'ensembles',
       component: Ensembles,
+    },
+    {
+      path: '/purge',
+      name: 'purge',
+      component: Purge,
     },
     {
       path: '/',
