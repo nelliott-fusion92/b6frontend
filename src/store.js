@@ -128,6 +128,7 @@ const store = new Vuex.Store({
     },
 
     DELETE_BANNER: async function({ commit }, bid) {
+      commit('changeLoadingStatus', 'LOADING')
       const data = await ax.delete(`${this.state.api_base}v1/banners/${bid}`)
       this.dispatch('GET_BANNERS')
     },
@@ -209,6 +210,35 @@ const store = new Vuex.Store({
       commit('changeBannerSavingStatus', 'COMPLETE')
       return true
 
+    },
+
+    UPLOAD_FILE: async function({ commit }, payload) {
+      //store.dispatch('AUTH')
+      commit('changeLoadingStatus', 'LOADING')
+
+      let formData = new FormData()
+
+      formData.append('files', payload)
+      formData.append('data', JSON.stringify({
+        name: 'TestUpload Name',
+        client: 'TestUpload Client',
+        spreadsheet: '',
+      }))
+
+      await ax.post(`${this.state.api_base}v1/orders`,
+          formData,
+          {
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            }
+          }
+      ).then(function(){
+        console.log('SUCCESS!!');
+      })
+      .catch(function(){
+        console.log('FAILURE!!');
+      });
+      commit('changeLoadingStatus', 'COMPLETE')
     },
 
     GENERATE_TEST_ARRAY: async function({ commit }) {

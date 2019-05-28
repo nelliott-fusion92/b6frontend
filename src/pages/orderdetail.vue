@@ -19,6 +19,9 @@
       previewBanner: function(id) {
         window.open(`${this.$store.state.b6_base}banner/${id}`)
       },
+      downloadSpreadsheet: function() {
+        window.open(this.order.spreadsheet)
+      }
     },
     components: {
       bannerdetailitem,
@@ -42,7 +45,7 @@
     <div>
       <pageheader :title="'Order for ' + order.client + ' / ' + order.name" />
       Order Date: {{ ObjectId(order._id).getTimestamp()}}
-      <div><a v-if="order.spreadsheet != ''" href="order.spreadsheet">Download Spreadsheet</a></div>
+      <div v-if="order.spreadsheet != ''" class="downloadspreadsheet" @click="downloadSpreadsheet()">Download Spreadsheet</div>
       <br />
       <h3>Banners in this order: </h3>
       <bannerblock
@@ -62,5 +65,10 @@
 <style lang="scss" scoped>
 
   @import '../../assets/theme.scss';
+
+  .downloadspreadsheet {
+    cursor: pointer;
+    color: #0FF;
+  }
 
 </style>

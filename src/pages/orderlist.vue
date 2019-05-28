@@ -42,6 +42,14 @@
       orderDate: function(id) {
         return moment(this.ObjectId(id).getTimestamp()).format('M/DD/YYYY h:mm a')
       },
+      submitFile: async function(){
+        await this.$store.dispatch('UPLOAD_FILE', this.file)
+        await this.$store.dispatch('GET_ORDERS')
+
+      },
+      handleFileUpload(){
+        this.file = this.$refs.file.files[0];
+      }
     }
   }
 
@@ -67,6 +75,11 @@
           </div>
         </router-link>
       </div>
+    </div>
+
+    <div>
+      <input type="file" id="file" ref="file" @change="handleFileUpload()"/>
+      <button @click="submitFile()">Submit</button>
     </div>
 
   </div>
