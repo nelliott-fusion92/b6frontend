@@ -2225,11 +2225,11 @@ const store = new Vuex.Store({
     },
 
     changeLoadingStatus: function(currentState, data) {
-      currentState.loadStatus = data;
+      currentState.loadStatus = data
     },
 
     changeBannerSavingStatus: function(currentState, data) {
-      currentState.bannerSavingStatus = data;
+      currentState.bannerSavingStatus = data
     },
 
     setCurrentBanner: function(currentState, data) {

@@ -24,7 +24,7 @@
     },
     async created () {
       await this.$store.dispatch('GET_BANNERS')
-      this.$store.dispatch('RESET_BANNERLIST_FILTERS')
+      await this.$store.dispatch('RESET_BANNERLIST_FILTERS')
       //await this.$store.dispatch('SET_BANNERLIST_FILTER', { field: 'name', operator: '^', value: 'walgreen' })
       //await this.$store.dispatch('SET_BANNERLIST_FILTER', { field: 'width', operator: '>', value: '300' })
     },
@@ -65,26 +65,26 @@
 
 <template>
 
-  <div>
+  <div v-if="loadStatus">
+    <div>
+      <pageheader v-bind:title="$route.name" />
+      <div id="filters">
+        <h3>Filters</h3>
+        <label>Search</label>
+        <input @input="setSearchText" />
+      </div>
+      <pagination :class="{ disabled: !loadStatus }" :limit="this.$store.state.bannersQuery.limit" :skip="this.$store.state.bannersQuery.skip" @change="turnPage" />
+      <div :class="{ animateflicker : !isSavingComplete, error : isError }" class="loading-display">{{bannerSavingStatus}}</div>
+      <bannerblock
+        class="bannerblock"
+        v-for="banner in banners"
+        :banner="banner"
+        :isPreset="false"
+        :bannerURL="'/banners/' + banner._id"
+        :key="banner._id" />
 
-    <pageheader v-bind:title="$route.name" />
-    <div id="filters">
-      <h3>Filters</h3>
-      <label>Search</label>
-      <input @input="setSearchText" />
+      <div v-if="banners.length == 0">No banners found with current filters.</div>
     </div>
-    <pagination :class="{ disabled: !loadStatus }" :limit="this.$store.state.bannersQuery.limit" :skip="this.$store.state.bannersQuery.skip" @change="turnPage" />
-    <div :class="{ animateflicker : !isSavingComplete, error : isError }" class="loading-display">{{bannerSavingStatus}}</div>
-    <bannerblock
-      class="bannerblock"
-      v-for="banner in banners"
-      :banner="banner"
-      :isPreset="false"
-      :bannerURL="'/banners/' + banner._id"
-      :key="banner._id" />
-
-    <div v-if="banners.length == 0">No banners found with current filters.</div>
-
 
   </div>
 

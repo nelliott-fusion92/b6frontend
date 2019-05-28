@@ -49,10 +49,10 @@
 
 <template>
 
-  <div>
+  <div v-if="loadStatus">
 
     <pageheader v-bind:title="$route.name" />
-    <div v-if="loadStatus">
+    <div>
       <div class="ordercontainer" v-for="order in orders">
         <router-link class="orderlink" :to="'/orders/' + order._id">
           <div class="client">{{ order.client }}</div>

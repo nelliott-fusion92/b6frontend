@@ -38,8 +38,8 @@
 </script>
 
 <template>
-  <div>
-    <div v-if="loadStatus">
+  <div v-if="loadStatus">
+    <div>
       <pageheader :title="'Order for ' + order.client + ' / ' + order.name" />
       Order Date: {{ ObjectId(order._id).getTimestamp()}}
       <div><a v-if="order.spreadsheet != ''" href="order.spreadsheet">Download Spreadsheet</a></div>

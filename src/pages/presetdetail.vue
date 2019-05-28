@@ -16,8 +16,9 @@
     methods: {
       createBannerFromPreset: function() {
         this.$store.dispatch('SAVE_PRESET_AS_NEW_BANNER').then(() => {
-          this.$router.push({ name: 'banners' })
+
         })
+        this.$router.push({ name: 'banners' })
       }
     },
     components: {
@@ -34,9 +35,9 @@
 </script>
 
 <template>
-  <div>
+  <div v-if="loadStatus">
     <pageheader v-bind:title="$route.name" />
-    <div v-if="loadStatus">
+    <div>
       <bannerdetailitem v-if="preset" v-bind:banner="preset" />
       <div @click="createBannerFromPreset" class="greenbtn">Create banner from preset</div>
     </div>

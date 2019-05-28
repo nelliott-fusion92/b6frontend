@@ -29,12 +29,10 @@
 
 <template>
 
-  <div>
+  <div v-if="loadStatus">
 
     <pageheader v-bind:title="$route.name" />
-
-
-
+    <div>All unprotected, unordered banners have been purged.</div>
   </div>
 
 </template>
