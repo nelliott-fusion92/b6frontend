@@ -8,7 +8,7 @@
       'id',
     ],
     async created () {
-      await this.$store.dispatch('GENERATE_TEST_ARRAY')
+      //await this.$store.dispatch('GENERATE_TEST_ARRAY')
       //await this.$store.dispatch('TEST_BANNER_UPDATE')
       //await this.$store.dispatch('CREATE_ORDER')
       await this.$store.dispatch('GET_PRESET', this.id)
