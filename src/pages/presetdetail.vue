@@ -19,6 +19,9 @@
 
         })
         this.$router.push({ name: 'banners' })
+      },
+      getPresetJSON: function() {
+        window.open(this.jsonUrl)
       }
     },
     components: {
@@ -28,6 +31,9 @@
     computed: {
       preset: function() {
         return this.$store.state.currentPreset
+      },
+      jsonUrl: function() {
+        return `${ this.$store.state.api_base }v1/presets/${ this.$store.state.currentPreset._id }`
       }
     }
   }
@@ -39,6 +45,7 @@
     <pageheader v-bind:title="$route.name" />
     <div>
       <bannerdetailitem v-if="preset" v-bind:banner="preset" />
+      <div @click="getPresetJSON" class="greenbtn">View Raw JSON</div>
       <div @click="createBannerFromPreset" class="greenbtn">Create banner from preset</div>
     </div>
 
