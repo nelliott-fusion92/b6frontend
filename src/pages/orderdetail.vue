@@ -44,8 +44,10 @@
   <div v-if="loadStatus">
     <div>
       <pageheader :title="'Order for ' + order.client + ' / ' + order.name" />
-      Order Date: {{ ObjectId(order._id).getTimestamp()}}
-      <div v-if="order.spreadsheet != ''" class="downloadspreadsheet" @click="downloadSpreadsheet()">Download Spreadsheet</div>
+      {{ this.formatDate(ObjectId(order._id).getTimestamp()) }}
+      <div v-if="order.spreadsheet != ''" class="downloadspreadsheet" @click="downloadSpreadsheet()">
+        <div class="doc"><i class="far fa-file-alt"></i></div> Download Spreadsheet
+      </div>
       <br />
       <h3>Banners in this order: </h3>
       <bannerblock
@@ -68,7 +70,15 @@
 
   .downloadspreadsheet {
     cursor: pointer;
-    color: #0FF;
+    margin: 10px 0 0 0;
+    color: #0ff;
+  }
+  .doc {
+    vertical-align: -7px;
+    font-size: 32px;
+    color: #FF0;
+    display: inline-block;
+    margin: 0 5px 0 0;
   }
 
 </style>

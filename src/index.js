@@ -17,8 +17,10 @@ Vue.config.productionTip = true
 Vue.mixin({
   methods: {
     createdDate: function(id) {
-      const timeStamp = new Date(parseInt(id.toString().substr(0,8), 16)*1000)
-      return moment(timeStamp).format('M/DD/YYYY h:mm a')
+      return this.formatDate(new Date(parseInt(id.toString().substr(0,8), 16)*1000))
+    },
+    formatDate: function(date) {
+      return moment(date).format('M/DD/YYYY h:mm a')
     }
   },
   computed: {
