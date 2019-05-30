@@ -24,7 +24,7 @@
 <template>
   <div id="app">
     <div id="header">
-      <h1>Bannerlink 6</h1>
+      <h1><router-link :to="{ name: 'home' }">Bannerlink 6</router-link></h1>
       <div style="color: rgba(255,255,255,.33); position: relative; top: -15px; margin: 0 0 0 8px; font-size: 10px;">Using {{ api_base }}</div>
 
       <div id="nav">
@@ -52,9 +52,11 @@
 </template>
 
 <style lang="scss">
-  @import url('../node_modules/@salesforce-ux/design-system/assets/styles/salesforce-lightning-design-system.min.css');
   @import '../assets/reset.scss';
+  @import url('../node_modules/@salesforce-ux/design-system/assets/styles/salesforce-lightning-design-system.min.css');
   @import '../assets/theme.scss';
+
+
   #app {
     display: grid;
     grid-template-rows: 70px auto $footerHeight;
@@ -78,6 +80,11 @@
     grid-row-start: 3;
     padding: $footerHeight / 2 + 7 0 0 0;
     margin: 10px 0 0 0;
+  }
+
+  h1 a {
+    color: #fff;
+    text-decoration:none;
   }
 
   #nav {

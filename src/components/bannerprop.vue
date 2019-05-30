@@ -106,7 +106,8 @@
 <style lang="scss" scoped>
 
   @import '../../assets/theme.scss';
-
+  @import '../../assets/forms.scss';
+  
   .prop {
     border-left: solid 4px #0FF;
     display:inline-block;
