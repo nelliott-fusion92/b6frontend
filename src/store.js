@@ -163,6 +163,10 @@ const store = new Vuex.Store({
       commit('setBannerProperty', payload)
     },
 
+    UPDATE_STATES: function({ commit }, payload) {
+      commit('updateStates', payload)
+    },
+
     SAVE_BANNER_AS_NEW_PRESET: async function({ commit }) {
       commit('changeBannerSavingStatus', 'SAVING AS NEW PRESET')
       await ax.post(`${this.state.api_base}v1/presets`, {
@@ -2156,6 +2160,9 @@ const store = new Vuex.Store({
     getBannerProperty: (state) => (path) => {
       return _.get(state.currentBanner, path)
     },
+    getCurrentBanner: (state) => (path) => {
+      return state.currentBanner
+    },
     getTerm: (state => (term) => {
       return _.get(state.terms, term, '(no definition found)')
     }),
@@ -2286,6 +2293,10 @@ const store = new Vuex.Store({
     },
     setCurrentOrder: function(currentState, data) {
       currentState.currentOrder = data
+    },
+
+    updateStates: function(currentState, data) {
+      currentState.currentBanner.states = data
     },
 
     setBannerProperty: function(currentState, payload) {

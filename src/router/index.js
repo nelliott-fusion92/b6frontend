@@ -5,6 +5,7 @@ import dotenv from 'dotenv/config'
 import Home from '../pages/home.vue'
 import Bannerlist from '../pages/bannerlist.vue'
 import Bannerdetail from '../pages/bannerdetail.vue'
+import BannerdetailV2 from '../pages/bannerdetailv2.vue'
 import Presetlist from '../pages/presetlist.vue'
 import Presetdetail from '../pages/presetdetail.vue'
 import Componentlist from '../pages/components.vue'
@@ -30,6 +31,14 @@ const r = new VueRouter({
       path: '/banners/:id',
       name: 'banner',
       component: Bannerdetail,
+      props: (route) => ({
+        id: route.params.id,
+      })
+    },
+    {
+      path: '/bannersv2/:id',
+      name: 'bannerv2',
+      component: BannerdetailV2,
       props: (route) => ({
         id: route.params.id,
       })

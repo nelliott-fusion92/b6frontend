@@ -23,10 +23,10 @@
     },
     async created () {
 
-      await this.$store.dispatch('GET_BANNER', this.id)
       await this.$store.dispatch('GET_COMPONENTS')
       await this.$store.dispatch('GET_CUSTOMTYPES')
       await this.$store.dispatch('GET_TERMS')
+      await this.$store.dispatch('GET_BANNER', this.id)      
 
       console.log(document.getElementById('statelist'))
       this.sortable = new Sortable(document.getElementById('statelist'), {
@@ -52,16 +52,11 @@
         return this.$store.state.bannerSavingStatus.indexOf('ERROR') > -1
       },
       banner: function() {
-        return this.$store.state.currentBanner
+        return this.$store.getters.getCurrentBanner()
       },
       components: function() {
         return this.$store.state.components
       },
-      newStateOrder: function() {
-        return _.map(document.getElementById('statelist').childNodes, (n) => {
-          return this.banner.states[n.attributes.index.value]
-        })
-      }
     },
     methods: {
       undo: function() {
@@ -85,11 +80,13 @@
       },
       stateOrderChanged: function(e) {
         console.log(document.getElementById('statelist').childNodes)
-        _.map(document.getElementById('statelist').childNodes, (n) => {
-          return this.banner.states[n.attributes.index.value]
-        })
+        this.$store.dispatch('UPDATE_STATES', _.map(document.getElementById('statelist').childNodes, (n) => {
+          let index = n.attributes.index.value
+          n.removeAttribute('index')
+          return this.banner.states[index]
+        }))
 
-        console.log(this.newStateOrder)
+        console.log(this.$store.state.currentBanner)
 
 
 
