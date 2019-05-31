@@ -92,6 +92,8 @@
 
 <style lang="css" scoped>
 
+  @import '../../assets/forms.scss';
+
   .disabled {
     opacity: .5;
     pointer-events: none;

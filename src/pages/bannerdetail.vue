@@ -1,5 +1,7 @@
 <script>
 
+  import _ from 'lodash-es'
+  import Sortable from 'sortablejs'
   import Bannerdisplay from '../components/bannerdisplay.vue'
   import Bannercomponent from '../components/bannercomponent.vue'
   import Bannerstate from '../components/bannerstate.vue'
@@ -20,11 +22,25 @@
       pageheader,
     },
     async created () {
+
       await this.$store.dispatch('GET_BANNER', this.id)
-      this.$store.dispatch('GET_COMPONENTS')
-      this.$store.dispatch('GET_CUSTOMTYPES')
-      this.$store.dispatch('GET_TERMS')
+      await this.$store.dispatch('GET_COMPONENTS')
+      await this.$store.dispatch('GET_CUSTOMTYPES')
+      await this.$store.dispatch('GET_TERMS')
+
+      console.log(document.getElementById('statelist'))
+      this.sortable = new Sortable(document.getElementById('statelist'), {
+        animation: 400,
+        sort: true,
+        dragClass: 'sortable-drag',
+        dataIdAttr: 'index',
+	      easing: "cubic-bezier(.17,.67,.47,.93)",
+          onEnd: (e) => {
+        		this.stateOrderChanged(e)
+        	},
+      })
     },
+
     computed: {
       bannerSavingStatus: function() {
         return this.$store.state.bannerSavingStatus
@@ -41,6 +57,11 @@
       components: function() {
         return this.$store.state.components
       },
+      newStateOrder: function() {
+        return _.map(document.getElementById('statelist').childNodes, (n) => {
+          return this.banner.states[n.attributes.index.value]
+        })
+      }
     },
     methods: {
       undo: function() {
@@ -62,6 +83,19 @@
       setBannerProperty: function(e) {
         this.$store.dispatch('SET_BANNER_PROPERTY', e)
       },
+      stateOrderChanged: function(e) {
+        console.log(document.getElementById('statelist').childNodes)
+        _.map(document.getElementById('statelist').childNodes, (n) => {
+          return this.banner.states[n.attributes.index.value]
+        })
+
+        console.log(this.newStateOrder)
+
+
+
+
+        //console.log(this.options)
+      }
     },
   }
 
@@ -110,8 +144,8 @@
     <div class="panel bigpanel">
       <h3>States</h3>
       <div class="panelbody bigpanelbody">
-        <div class="statelist">
-          <Bannerstate class="banner-state" v-for="(state, key) in banner.states" :statekey="key" :state="state" :key="key" />
+        <div id="statelist" class="statelist">
+          <Bannerstate :index="key" class="banner-state" v-for="(state, key) in banner.states" :statekey="key" :state="state" :key="key" />
         </div>
       </div>
     </div>
@@ -183,6 +217,18 @@
     width: 100%;
     display: inline-block;
   }
+  .sortable-drag {
+    border: solid 1px #f00;
+    transform: scale(1.5);
+    background-color: #FFF;
+    opacity: 1 !important;
+  }
+  .sortable-chosen {
+
+    border: solid 1px #f00;
+    border-bottom: solid 1px #f00 !important;
+    z-index: 100;
+  }
   .bannerid {
     font-size: 14px;
 
@@ -192,6 +238,7 @@
     padding: 15px 10px;
     background-color: #050505;
     border-bottom: solid 1px #222;
+    box-sizing: border-box;
   }
   .banner-state:last-child {
     border-bottom: none;

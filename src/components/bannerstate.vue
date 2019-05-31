@@ -84,7 +84,7 @@
 <style lang="scss" scoped>
 
   @import '../../assets/theme.scss';
-
+  
   .togglebutton {
     cursor: pointer;
     font-size: 14px;

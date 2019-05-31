@@ -82,7 +82,7 @@ const r = new VueRouter({
     },
     {
       path: '/',
-      name: 'Home',
+      name: 'home',
       component: Home,
     },
     {
