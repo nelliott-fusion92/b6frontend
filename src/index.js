@@ -11,7 +11,7 @@ import store from './store'
 
 import moment from 'moment'
 
-Vue.use(LoadScript);
+Vue.use(LoadScript)
 Vue.config.productionTip = true
 
 Vue.mixin({
